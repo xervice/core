@@ -1,0 +1,25 @@
+{
+  "name"             : "xervice/core",
+  "description"      : "Xervice core functionality",
+  "license"          : "MIT",
+  "authors"          : [
+    {
+      "name" : "Mike Bertram",
+      "email": "contact@mibexx.de"
+    }
+  ],
+  "require-dev": {
+    "codeception/codeception": "*",
+    "symfony/var-dumper": "*"
+  },
+  "require": {
+    "pimple/pimple": "3.2.*",
+    "xervice/config": "^1.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Xervice\\": "src/",
+      "XerviceTest\\": "src/Xervice"
+    }
+  }
+}
