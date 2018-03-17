@@ -15,7 +15,7 @@ use Xervice\Core\Locator\Locator;
 
 class XerviceLocatorProxy implements ProxyInterface
 {
-    const NAMESPACE_PROXY_FORMAT = '%1$s\\%2$s\\%2$s%3$s';
+    const NAMESPACE_PROXY_FORMAT = '\%1$s\\%2$s\\%2$s%3$s';
 
     /**
      * @var string
