@@ -4,7 +4,7 @@
 namespace Xervice\Core\Factory;
 
 
-use Xervice\Config\XerviceConfig;
+use Xervice\Core\Config\ConfigInterface;
 use Xervice\Core\Dependency\DependencyProviderInterface;
 
 class AbstractFactory implements FactoryInterface
@@ -15,14 +15,24 @@ class AbstractFactory implements FactoryInterface
     private $dependencyProvider;
 
     /**
+     * @var \Xervice\Core\Config\ConfigInterface
+     */
+    private $config;
+
+    /**
      * AbstractFactory constructor.
      *
      * @param \Xervice\Core\Dependency\DependencyProviderInterface $dependencyProvider
+     * @param \Xervice\Core\Config\ConfigInterface $config
      */
-    public function __construct(DependencyProviderInterface $dependencyProvider)
-    {
+    public function __construct(
+        DependencyProviderInterface $dependencyProvider,
+        ConfigInterface $config
+    ) {
         $this->dependencyProvider = $dependencyProvider;
+        $this->config = $config;
     }
+
 
     /**
      * @param string $key
@@ -35,10 +45,10 @@ class AbstractFactory implements FactoryInterface
     }
 
     /**
-     * @return \Xervice\Config\Container\ConfigContainer
+     * @return \Xervice\Core\Config\ConfigInterface
      */
     public function getConfig()
     {
-        return XerviceConfig::getInstance()->getConfig();
+        return $this->config;
     }
 }

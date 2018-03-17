@@ -29,7 +29,7 @@ interface DependencyProviderInterface
     public function register(ServiceProviderInterface $provider);
 
     /**
-     * @return \Xervice\Config\Container\ConfigContainer
+     * @return \Xervice\Core\Config\ConfigInterface
      */
     public function getConfig();
 }

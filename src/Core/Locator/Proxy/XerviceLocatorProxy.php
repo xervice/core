@@ -4,15 +4,18 @@
 namespace Xervice\Core\Locator\Proxy;
 
 
+use Xervice\Config\XerviceConfig;
+use Xervice\Core\CoreConfig;
 use Xervice\Core\Dependency\DependencyProvider;
 use Xervice\Core\Locator\Exception\LocatorClientNotFound;
+use Xervice\Core\Locator\Exception\LocatorConfigNotFound;
 use Xervice\Core\Locator\Exception\LocatorFacadeNotFound;
 use Xervice\Core\Locator\Exception\LocatorFactoryNotFound;
 use Xervice\Core\Locator\Locator;
 
 class XerviceLocatorProxy implements ProxyInterface
 {
-    const NAMESPACE_PROXY_FORMAT = 'Xervice\\%1$s\\%1$s%2$s';
+    const NAMESPACE_PROXY_FORMAT = '%1$s\\%2$s\\%2$s%3$s';
 
     /**
      * @var string
@@ -40,6 +43,11 @@ class XerviceLocatorProxy implements ProxyInterface
     private $client;
 
     /**
+     * @var \Xervice\Core\Config\ConfigInterface
+     */
+    private $config;
+
+    /**
      * XerviceLocatorProxy constructor.
      *
      * @param string $service
@@ -50,40 +58,73 @@ class XerviceLocatorProxy implements ProxyInterface
     }
 
     /**
-     * @return \Xervice\Core\Factory\FactoryInterface
+     * @return null|\Xervice\Core\Config\ConfigInterface
+     * @throws \Xervice\Core\Locator\Exception\LocatorConfigNotFound
+     */
+    public function config()
+    {
+        if ($this->config === null) {
+            foreach ($this->getServiceNamespaces('Config') as $class) {
+                if (class_exists($class)) {
+                    $this->config = new $class();
+                    break;
+                }
+            }
+
+            if ($this->config === null) {
+                throw new LocatorConfigNotFound($this->service);
+            }
+        }
+        return $this->config;
+    }
+
+    /**
+     * @return null|\Xervice\Core\Factory\FactoryInterface
+     * @throws \Xervice\Core\Locator\Exception\LocatorConfigNotFound
      * @throws \Xervice\Core\Locator\Exception\LocatorFactoryNotFound
      */
     public function factory()
     {
         if ($this->factory === null) {
-            $factoryClass = $this->getNamespace('Factory');
-            if (!class_exists($factoryClass)) {
-                throw new LocatorFactoryNotFound($this->service);
+            foreach ($this->getServiceNamespaces('Factory') as $class) {
+                if (class_exists($class)) {
+                    $this->factory = new $class(
+                        $this->getContainer(),
+                        $this->config()
+                    );
+                    break;
+                }
             }
 
-            $this->factory = new $factoryClass(
-                $this->getContainer()
-            );
+            if ($this->factory === null) {
+                throw new LocatorFactoryNotFound($this->service);
+            }
         }
         return $this->factory;
     }
 
     /**
-     * @return \Xervice\Core\Facade\FacadeInterface|\Xervice\Core\Factory\FactoryInterface
+     * @return null|\Xervice\Core\Facade\FacadeInterface|\Xervice\Core\Factory\FactoryInterface
+     * @throws \Xervice\Core\Locator\Exception\LocatorConfigNotFound
      * @throws \Xervice\Core\Locator\Exception\LocatorFacadeNotFound
      * @throws \Xervice\Core\Locator\Exception\LocatorFactoryNotFound
      */
     public function facade()
     {
         if ($this->facade === null) {
-            $facadeClass = $this->getNamespace('Facade');
-            if (!class_exists($facadeClass)) {
-                throw new LocatorFacadeNotFound($this->service);
+            foreach ($this->getServiceNamespaces('Facade') as $class) {
+                if (class_exists($class)) {
+                    $this->facade = new $class(
+                        $this->factory(),
+                        $this->config()
+                    );
+                    break;
+                }
             }
 
-            $this->facade = new $facadeClass(
-                $this->factory()
-            );
+            if ($this->facade === null) {
+                throw new LocatorFacadeNotFound($this->service);
+            }
         }
         return $this->facade;
     }
@@ -96,25 +137,31 @@ class XerviceLocatorProxy implements ProxyInterface
     public function client()
     {
         if ($this->client === null) {
-            $clientClass = $this->getNamespace('Client');
-            if (!class_exists($clientClass)) {
-                throw new LocatorClientNotFound($this->service);
+            foreach ($this->getServiceNamespaces('Client') as $class) {
+                if (class_exists($class)) {
+                    $this->client = new $class(
+                        $this->factory(),
+                        $this->config()
+                    );
+                    break;
+                }
             }
 
-            $this->client = new $clientClass(
-                $this->factory()
-            );
+            if ($this->client === null) {
+                throw new LocatorClientNotFound($this->service);
+            }
         }
         return $this->client;
     }
 
     /**
-     * @return \Xervice\Core\Dependency\DependencyProviderInterface
+     * @return \Xervice\Core\Dependency\DependencyProvider|\Xervice\Core\Dependency\DependencyProviderInterface
+     * @throws \Xervice\Core\Locator\Exception\LocatorConfigNotFound
      */
     private function getContainer()
     {
         if ($this->container === null) {
-            $this->container = new DependencyProvider();
+            $this->container = new DependencyProvider($this->config());
             $this->registerDependencies();
         }
         return $this->container;
@@ -122,9 +169,11 @@ class XerviceLocatorProxy implements ProxyInterface
 
     private function registerDependencies()
     {
-        $providerClass = $this->getNamespace('DependencyProvider');
-        if (class_exists($providerClass)) {
-            $this->container->register(new $providerClass(Locator::getInstance()));
+        foreach ($this->getServiceNamespaces('DependencyProvider') as $class) {
+            if (class_exists($class)) {
+                $this->container->register(new $class(Locator::getInstance()));
+                break;
+            }
         }
     }
 
@@ -133,13 +182,34 @@ class XerviceLocatorProxy implements ProxyInterface
      *
      * @return string
      */
-    private function getNamespace(string $type): string
+    private function getNamespace(string $type, string $layer): string
     {
         return sprintf(
             self::NAMESPACE_PROXY_FORMAT,
+            $layer,
             $this->service,
             $type
         );
+    }
+
+    /**
+     * @return string
+     */
+    private function getProjectLayerName()
+    {
+        return XerviceConfig::getInstance()->getConfig()->get(CoreConfig::PROJECT_LAYER_NAMESPACE, 'App');
+    }
+
+    /**
+     * @return array
+     */
+    private function getServiceNamespaces(string $type): array
+    {
+        $xerviceNamespaces = [
+            $this->getNamespace($type, $this->getProjectLayerName()),
+            $this->getNamespace($type, 'Xervice')
+        ];
+        return $xerviceNamespaces;
     }
 
 }

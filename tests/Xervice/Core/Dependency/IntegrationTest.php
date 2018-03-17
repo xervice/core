@@ -3,6 +3,8 @@
 namespace XerviceTest\Core\Dependency;
 
 use Xervice\Config\Container\ConfigContainer;
+use Xervice\Core\Config\ConfigInterface;
+use Xervice\Core\CoreConfig;
 use Xervice\Core\Dependency\DependencyProvider;
 use Xervice\Core\Dependency\Provider\AbstractProvider;
 
@@ -21,7 +23,7 @@ class IntegrationTest extends \Codeception\Test\Unit
      */
     public function testDependencyProviderSetAndGet()
     {
-        $provider = new DependencyProvider();
+        $provider = new DependencyProvider(new CoreConfig());
         $provider->set(
             "test", function () {
             return "testings";
@@ -42,7 +44,7 @@ class IntegrationTest extends \Codeception\Test\Unit
      */
     public function testDependencyProviderRegisterProvider()
     {
-        $container = new DependencyProvider();
+        $container = new DependencyProvider(new CoreConfig());
 
         $provider = $this->getMockBuilder(AbstractProvider::class)
                          ->setMethods(["handleDependencies"])
@@ -65,10 +67,10 @@ class IntegrationTest extends \Codeception\Test\Unit
      */
     public function testGetConfigWorks()
     {
-        $container = new DependencyProvider();
+        $container = new DependencyProvider(new CoreConfig());
 
         $this->assertInstanceOf(
-            ConfigContainer::class,
+            CoreConfig::class,
             $container->getConfig()
         );
     }

@@ -12,4 +12,9 @@ interface FactoryInterface
      * @return mixed
      */
     public function getDependency(string $key);
+
+    /**
+     * @return \Xervice\Core\Config\ConfigInterface
+     */
+    public function getConfig();
 }

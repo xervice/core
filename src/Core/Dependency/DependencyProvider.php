@@ -6,10 +6,28 @@ namespace Xervice\Core\Dependency;
 
 use Pimple\Container;
 use Xervice\Config\XerviceConfig;
+use Xervice\Core\Config\ConfigInterface;
+use Xervice\Core\Locator\Locator;
 
 
 class DependencyProvider extends Container implements DependencyProviderInterface
 {
+    /**
+     * @var \Xervice\Core\Config\ConfigInterface
+     */
+    private $config;
+
+    /**
+     * DependencyProvider constructor.
+     *
+     * @param \Xervice\Core\Config\ConfigInterface $config
+     */
+    public function __construct(ConfigInterface $config)
+    {
+        $this->config = $config;
+    }
+
+
     /**
      * @param string $name
      * @param callable $function
@@ -33,12 +51,19 @@ class DependencyProvider extends Container implements DependencyProviderInterfac
         return $this[$name];
     }
 
-
     /**
-     * @return \Xervice\Config\Container\ConfigContainer
+     * @return \Xervice\Core\Config\ConfigInterface
      */
     public function getConfig()
     {
-        return XerviceConfig::getInstance()->getConfig();
+        return $this->config;
+    }
+
+    /**
+     * @return \Xervice\Core\Locator\Locator
+     */
+    public function getLocator()
+    {
+        return Locator::getInstance();
     }
 }
