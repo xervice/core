@@ -41,5 +41,15 @@ abstract class AbstractClient implements ClientInterface
         return $this->config;
     }
 
+    /**
+     * @return \Xervice\Core\Factory\FactoryInterface
+     */
+    public function getFactory()
+    {
+        return $this->factory;
+    }
+
+
+
 
 }

@@ -42,5 +42,11 @@ abstract class AbstractFacade implements FacadeInterface
         return $this->config;
     }
 
-
+    /**
+     * @return \Xervice\Core\Factory\FactoryInterface
+     */
+    public function getFactory()
+    {
+        return $this->factory;
+    }
 }
