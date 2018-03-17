@@ -13,8 +13,9 @@
     "symfony/var-dumper": "*"
   },
   "require": {
+    "php": ">=7.1.0",
     "pimple/pimple": "3.2.*",
-    "xervice/config": "^1.1.0"
+    "xervice/config": ">=1.1.2"
   },
   "autoload": {
     "psr-4": {
