@@ -2,8 +2,8 @@
 
 namespace XerviceTest\Core\Locator;
 
+use Test\Core\CoreFacade;
 use Xervice\Core\CoreClient;
-use Xervice\Core\CoreFacade;
 use Xervice\Core\CoreFactory;
 
 class IntegrationTest extends \Codeception\Test\Unit

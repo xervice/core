@@ -107,16 +107,16 @@
         },
         {
             "name": "xervice/config",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xervice/config.git",
-                "reference": "e87169989b1a8b1557864096ef46666351b1c93f"
+                "reference": "586fd5727b2c94d467cd47f96aee7cde03d918da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xervice/config/zipball/e87169989b1a8b1557864096ef46666351b1c93f",
-                "reference": "e87169989b1a8b1557864096ef46666351b1c93f",
+                "url": "https://api.github.com/repos/xervice/config/zipball/586fd5727b2c94d467cd47f96aee7cde03d918da",
+                "reference": "586fd5727b2c94d467cd47f96aee7cde03d918da",
                 "shasum": ""
             },
             "require-dev": {
@@ -141,7 +141,7 @@
                 }
             ],
             "description": "Config environment to xervice components",
-            "time": "2018-03-17T18:16:26+00:00"
+            "time": "2018-03-17T19:51:36+00:00"
         }
     ],
     "packages-dev": [

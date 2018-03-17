@@ -20,6 +20,9 @@
     "psr-4": {
       "Xervice\\": "src/",
       "XerviceTest\\": "src/Xervice"
+    },
+    "psr-0": {
+      "Test\\": "src/"
     }
   }
 }
