@@ -8,9 +8,9 @@ interface ConfigInterface
 {
     /**
      * @param string $name
-     * @param string|null $default
+     * @param mixed $default
      *
      * @return mixed
      */
-    public function get(string $name, string $default = null);
+    public function get(string $name, $default = null);
 }

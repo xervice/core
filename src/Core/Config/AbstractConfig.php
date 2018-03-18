@@ -23,12 +23,12 @@ abstract class AbstractConfig implements ConfigInterface
 
     /**
      * @param string $name
-     * @param string|null $default
+     * @param mixed $default
      *
      * @return mixed
      * @throws \Xervice\Config\Exception\ConfigNotFound
      */
-    public function get(string $name, string $default = null)
+    public function get(string $name, $default = null)
     {
         return $this->config->get($name, $default);
     }
