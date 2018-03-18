@@ -50,7 +50,7 @@ trait DynamicLocator
      */
     private function getServiceName()
     {
-        if (!preg_match('@([A-Za-z]+)\\\\([A-Za-z]+)\\\\([A-Za-z\\\\]+)@', __CLASS__, $matches)) {
+        if (!preg_match('@([A-Za-z]+)\\\\([A-Za-z]+)\\\\([A-Za-z\\\\]+)@', get_class($this), $matches)) {
             throw new ServiceNotParseable(__NAMESPACE__);
         }
 
