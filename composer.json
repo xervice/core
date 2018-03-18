@@ -15,7 +15,7 @@
   "require": {
     "php": ">=7.1.0",
     "pimple/pimple": "3.2.*",
-    "xervice/config": "^1.0.0"
+    "xervice/config": "^1.1.3"
   },
   "autoload": {
     "psr-4": {
