@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b3b058a288200b8d0a616f01277ca304",
+    "content-hash": "6c06a2a8d2e06f65e3633f4c8c24c9e3",
     "packages": [
         {
             "name": "pimple/pimple",
@@ -107,16 +107,16 @@
         },
         {
             "name": "xervice/config",
-            "version": "1.1.2",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xervice/config.git",
-                "reference": "223342c0a93280a8c55b72a32c909b28cf64690a"
+                "reference": "098c7473d2a80a70f6b58e96de1c5c0e02d1b132"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xervice/config/zipball/223342c0a93280a8c55b72a32c909b28cf64690a",
-                "reference": "223342c0a93280a8c55b72a32c909b28cf64690a",
+                "url": "https://api.github.com/repos/xervice/config/zipball/098c7473d2a80a70f6b58e96de1c5c0e02d1b132",
+                "reference": "098c7473d2a80a70f6b58e96de1c5c0e02d1b132",
                 "shasum": ""
             },
             "require-dev": {
@@ -141,7 +141,7 @@
                 }
             ],
             "description": "Config environment to xervice components",
-            "time": "2018-03-17T20:44:17+00:00"
+            "time": "2018-03-18T11:38:54+00:00"
         }
     ],
     "packages-dev": [
