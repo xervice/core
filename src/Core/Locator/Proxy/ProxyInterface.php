@@ -12,7 +12,7 @@ interface ProxyInterface
     public function factory();
 
     /**
-     * @return \Xervice\Core\Factory\FactoryInterface
+     * @return \Xervice\Core\Facade\FacadeInterface
      */
     public function facade();
 
