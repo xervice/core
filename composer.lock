@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "feff32434ed8a674fd90eccdebc188f8",
+    "content-hash": "e0794fd044d4c7850b5b88531e3f5c6d",
     "packages": [
         {
             "name": "pimple/pimple",
@@ -107,16 +107,16 @@
         },
         {
             "name": "xervice/config",
-            "version": "1.1.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xervice/config.git",
-                "reference": "098c7473d2a80a70f6b58e96de1c5c0e02d1b132"
+                "reference": "d38f08206da09268841c7085d8a3f321a934cf8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xervice/config/zipball/098c7473d2a80a70f6b58e96de1c5c0e02d1b132",
-                "reference": "098c7473d2a80a70f6b58e96de1c5c0e02d1b132",
+                "url": "https://api.github.com/repos/xervice/config/zipball/d38f08206da09268841c7085d8a3f321a934cf8f",
+                "reference": "d38f08206da09268841c7085d8a3f321a934cf8f",
                 "shasum": ""
             },
             "require-dev": {
@@ -126,8 +126,10 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Xervice\\": "src/",
-                    "XerviceTest\\": "tests/Xervice"
+                    "XerviceTest\\": "tests/Xervice/"
+                },
+                "psr-0": {
+                    "Xervice\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -141,7 +143,7 @@
                 }
             ],
             "description": "Config environment to xervice components",
-            "time": "2018-03-18T11:38:54+00:00"
+            "time": "2018-03-25T10:07:58+00:00"
         }
     ],
     "packages-dev": [
@@ -206,21 +208,21 @@
         },
         {
             "name": "codeception/codeception",
-            "version": "2.4.0",
+            "version": "2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "c50789a9a62cc0eefc0252e88a5f04f8c47b55f4"
+                "reference": "bca3547632556875f1cdd567d6057cc14fe472b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/c50789a9a62cc0eefc0252e88a5f04f8c47b55f4",
-                "reference": "c50789a9a62cc0eefc0252e88a5f04f8c47b55f4",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/bca3547632556875f1cdd567d6057cc14fe472b8",
+                "reference": "bca3547632556875f1cdd567d6057cc14fe472b8",
                 "shasum": ""
             },
             "require": {
                 "behat/gherkin": "^4.4.0",
-                "codeception/phpunit-wrapper": "^6.0|^7.0",
+                "codeception/phpunit-wrapper": "^6.0.9|^7.0.6",
                 "codeception/stub": "^1.0",
                 "ext-json": "*",
                 "ext-mbstring": "*",
@@ -293,20 +295,20 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2018-02-27T00:09:12+00:00"
+            "time": "2018-03-31T22:30:43+00:00"
         },
         {
             "name": "codeception/phpunit-wrapper",
-            "version": "7.0.5",
+            "version": "7.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/phpunit-wrapper.git",
-                "reference": "42c8fdbf301ee36f6b58cb154972f9148fdcb7d4"
+                "reference": "e8528cb777cf5a5ccea1cf57a3522b142625d1b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/phpunit-wrapper/zipball/42c8fdbf301ee36f6b58cb154972f9148fdcb7d4",
-                "reference": "42c8fdbf301ee36f6b58cb154972f9148fdcb7d4",
+                "url": "https://api.github.com/repos/Codeception/phpunit-wrapper/zipball/e8528cb777cf5a5ccea1cf57a3522b142625d1b5",
+                "reference": "e8528cb777cf5a5ccea1cf57a3522b142625d1b5",
                 "shasum": ""
             },
             "require": {
@@ -336,7 +338,7 @@
                 }
             ],
             "description": "PHPUnit classes used by Codeception",
-            "time": "2018-03-16T10:18:33+00:00"
+            "time": "2018-03-31T18:49:51+00:00"
         },
         {
             "name": "codeception/stub",
@@ -482,16 +484,16 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "6.3.0",
+            "version": "6.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699"
+                "reference": "68d0ea14d5a3f42a20e87632a5f84931e2709c90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f4db5a78a5ea468d4831de7f0bf9d9415e348699",
-                "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/68d0ea14d5a3f42a20e87632a5f84931e2709c90",
+                "reference": "68d0ea14d5a3f42a20e87632a5f84931e2709c90",
                 "shasum": ""
             },
             "require": {
@@ -501,7 +503,7 @@
             },
             "require-dev": {
                 "ext-curl": "*",
-                "phpunit/phpunit": "^4.0 || ^5.0",
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4",
                 "psr/log": "^1.0"
             },
             "suggest": {
@@ -510,7 +512,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "6.2-dev"
+                    "dev-master": "6.3-dev"
                 }
             },
             "autoload": {
@@ -543,7 +545,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2017-06-22T18:50:49+00:00"
+            "time": "2018-03-26T16:33:04+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1274,16 +1276,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.0.2",
+            "version": "7.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "e2f8aa21bc54b6ba218bdd4f9e0dac1e9bc3b4e9"
+                "reference": "536f4d853c12d8189963435088e8ff7c0daeab2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/e2f8aa21bc54b6ba218bdd4f9e0dac1e9bc3b4e9",
-                "reference": "e2f8aa21bc54b6ba218bdd4f9e0dac1e9bc3b4e9",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/536f4d853c12d8189963435088e8ff7c0daeab2e",
+                "reference": "536f4d853c12d8189963435088e8ff7c0daeab2e",
                 "shasum": ""
             },
             "require": {
@@ -1297,7 +1299,7 @@
                 "phar-io/version": "^1.0",
                 "php": "^7.1",
                 "phpspec/prophecy": "^1.7",
-                "phpunit/php-code-coverage": "^6.0",
+                "phpunit/php-code-coverage": "^6.0.1",
                 "phpunit/php-file-iterator": "^1.4.3",
                 "phpunit/php-text-template": "^1.2.1",
                 "phpunit/php-timer": "^2.0",
@@ -1350,7 +1352,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-02-26T07:03:12+00:00"
+            "time": "2018-03-26T07:36:48+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2750,7 +2752,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "xervice/config": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
