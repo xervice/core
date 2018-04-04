@@ -4,6 +4,7 @@
 namespace Xervice\Core\Locator\Dynamic;
 
 
+use Core\Locator\Dynamic\ServiceNotParseable;
 use Xervice\Core\Locator\Locator;
 
 trait DynamicLocator
