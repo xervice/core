@@ -39,7 +39,7 @@ class AbstractFactory implements FactoryInterface
      *
      * @return mixed
      */
-    public function getDependency(string $key)
+    protected function getDependency(string $key)
     {
         return $this->dependencyProvider->get($key);
     }
@@ -47,7 +47,7 @@ class AbstractFactory implements FactoryInterface
     /**
      * @return \Xervice\Core\Config\ConfigInterface
      */
-    public function getConfig()
+    protected function getConfig()
     {
         return $this->config;
     }
