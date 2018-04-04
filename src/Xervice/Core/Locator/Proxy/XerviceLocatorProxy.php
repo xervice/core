@@ -5,8 +5,12 @@ namespace Xervice\Core\Locator\Proxy;
 
 
 use Xervice\Config\XerviceConfig;
+use Xervice\Core\Client\EmptyClient;
+use Xervice\Core\Config\EmptyConfig;
 use Xervice\Core\CoreConfig;
 use Xervice\Core\Dependency\DependencyProvider;
+use Xervice\Core\Facade\EmptyFacade;
+use Xervice\Core\Factory\EmptyFactory;
 use Xervice\Core\Locator\Exception\LocatorClientNotFound;
 use Xervice\Core\Locator\Exception\LocatorConfigNotFound;
 use Xervice\Core\Locator\Exception\LocatorFacadeNotFound;
@@ -58,8 +62,9 @@ class XerviceLocatorProxy implements ProxyInterface
     }
 
     /**
-     * @return null|\Xervice\Core\Config\ConfigInterface
-     * @throws \Xervice\Core\Locator\Exception\LocatorConfigNotFound
+     * @return \Xervice\Core\Config\ConfigInterface
+     * @throws \Xervice\Config\Exception\ConfigNotFound
+     * @throws \Xervice\Config\Exception\FileNotFound
      */
     public function config()
     {
@@ -72,16 +77,16 @@ class XerviceLocatorProxy implements ProxyInterface
             }
 
             if ($this->config === null) {
-                throw new LocatorConfigNotFound($this->service);
+                $this->config = new EmptyConfig();
             }
         }
         return $this->config;
     }
 
     /**
-     * @return null|\Xervice\Core\Factory\FactoryInterface
-     * @throws \Xervice\Core\Locator\Exception\LocatorConfigNotFound
-     * @throws \Xervice\Core\Locator\Exception\LocatorFactoryNotFound
+     * @return \Xervice\Core\Factory\FactoryInterface
+     * @throws \Xervice\Config\Exception\ConfigNotFound
+     * @throws \Xervice\Config\Exception\FileNotFound
      */
     public function factory()
     {
@@ -97,18 +102,19 @@ class XerviceLocatorProxy implements ProxyInterface
             }
 
             if ($this->factory === null) {
-                throw new LocatorFactoryNotFound($this->service);
+                $this->factory = new EmptyFactory(
+                    $this->getContainer(),
+                    $this->config()
+                );
             }
         }
         return $this->factory;
     }
 
     /**
-     * @return null|\Xervice\Core\Facade\FacadeInterface
-     * @throws \Xervice\Core\Locator\Exception\LocatorClientNotFound
-     * @throws \Xervice\Core\Locator\Exception\LocatorConfigNotFound
-     * @throws \Xervice\Core\Locator\Exception\LocatorFacadeNotFound
-     * @throws \Xervice\Core\Locator\Exception\LocatorFactoryNotFound
+     * @return \Xervice\Core\Facade\FacadeInterface
+     * @throws \Xervice\Config\Exception\ConfigNotFound
+     * @throws \Xervice\Config\Exception\FileNotFound
      */
     public function facade()
     {
@@ -125,7 +131,11 @@ class XerviceLocatorProxy implements ProxyInterface
             }
 
             if ($this->facade === null) {
-                throw new LocatorFacadeNotFound($this->service);
+                $this->facade = new EmptyFacade(
+                    $this->factory(),
+                    $this->config(),
+                    $this->client()
+                );
             }
         }
         return $this->facade;
@@ -133,8 +143,8 @@ class XerviceLocatorProxy implements ProxyInterface
 
     /**
      * @return \Xervice\Core\Client\ClientInterface
-     * @throws \Xervice\Core\Locator\Exception\LocatorClientNotFound
-     * @throws \Xervice\Core\Locator\Exception\LocatorFactoryNotFound
+     * @throws \Xervice\Config\Exception\ConfigNotFound
+     * @throws \Xervice\Config\Exception\FileNotFound
      */
     public function client()
     {
@@ -150,15 +160,19 @@ class XerviceLocatorProxy implements ProxyInterface
             }
 
             if ($this->client === null) {
-                throw new LocatorClientNotFound($this->service);
+                $this->client = new EmptyClient(
+                    $this->factory(),
+                    $this->config()
+                );
             }
         }
         return $this->client;
     }
 
     /**
-     * @return \Xervice\Core\Dependency\DependencyProvider|\Xervice\Core\Dependency\DependencyProviderInterface
-     * @throws \Xervice\Core\Locator\Exception\LocatorConfigNotFound
+     * @return \Xervice\Core\Dependency\DependencyProviderInterface
+     * @throws \Xervice\Config\Exception\ConfigNotFound
+     * @throws \Xervice\Config\Exception\FileNotFound
      */
     private function getContainer()
     {
@@ -169,6 +183,10 @@ class XerviceLocatorProxy implements ProxyInterface
         return $this->container;
     }
 
+    /**
+     * @throws \Xervice\Config\Exception\ConfigNotFound
+     * @throws \Xervice\Config\Exception\FileNotFound
+     */
     private function registerDependencies()
     {
         foreach ($this->getServiceNamespaces('DependencyProvider') as $class) {
@@ -195,7 +213,9 @@ class XerviceLocatorProxy implements ProxyInterface
     }
 
     /**
-     * @return string
+     * @return mixed
+     * @throws \Xervice\Config\Exception\ConfigNotFound
+     * @throws \Xervice\Config\Exception\FileNotFound
      */
     private function getProjectLayerName()
     {
@@ -203,7 +223,11 @@ class XerviceLocatorProxy implements ProxyInterface
     }
 
     /**
+     * @param string $type
+     *
      * @return array
+     * @throws \Xervice\Config\Exception\ConfigNotFound
+     * @throws \Xervice\Config\Exception\FileNotFound
      */
     private function getServiceNamespaces(string $type): array
     {

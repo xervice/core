@@ -3,8 +3,11 @@
 namespace XerviceTest\Core\Locator;
 
 use Test\Core\CoreFacade;
+use Xervice\Core\Client\EmptyClient;
 use Xervice\Core\CoreClient;
 use Xervice\Core\CoreFactory;
+use Xervice\Core\Facade\EmptyFacade;
+use Xervice\Core\Factory\EmptyFactory;
 
 class IntegrationTest extends \Codeception\Test\Unit
 {
@@ -61,12 +64,13 @@ class IntegrationTest extends \Codeception\Test\Unit
      * @group Locator
      * @group Integration
      * @group Fail
-     *
-     * @expectedException \Xervice\Core\Locator\Exception\LocatorFacadeNotFound
      */
     public function testLocatorGetFacadeException()
     {
-        $this->tester->getLocator()->notexist()->facade();
+        $this->assertInstanceOf(
+            EmptyFacade::class,
+            $this->tester->getLocator()->notexist()->facade()
+        );
     }
 
     /**
@@ -75,12 +79,13 @@ class IntegrationTest extends \Codeception\Test\Unit
      * @group Locator
      * @group Integration
      * @group Fail
-     *
-     * @expectedException \Xervice\Core\Locator\Exception\LocatorFactoryNotFound
      */
     public function testLocatorGetFactoryException()
     {
-        $this->tester->getLocator()->notexist()->factory();
+        $this->assertInstanceOf(
+            EmptyFactory::class,
+            $this->tester->getLocator()->notexist()->factory()
+        );
     }
 
     /**
@@ -89,11 +94,12 @@ class IntegrationTest extends \Codeception\Test\Unit
      * @group Locator
      * @group Integration
      * @group Fail
-     *
-     * @expectedException \Xervice\Core\Locator\Exception\LocatorClientNotFound
      */
     public function testLocatorGetClientException()
     {
-        $this->tester->getLocator()->notexist()->client();
+        $this->assertInstanceOf(
+            EmptyClient::class,
+            $this->tester->getLocator()->notexist()->client()
+        );
     }
 }
