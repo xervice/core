@@ -4,49 +4,65 @@
 namespace Xervice\Core\Facade;
 
 
+use Xervice\Core\Client\ClientInterface;
 use Xervice\Core\Config\ConfigInterface;
 use Xervice\Core\Factory\FactoryInterface;
 
 abstract class AbstractFacade implements FacadeInterface
 {
     /**
-     * @var \Xervice\Core\Factory\FactoryInterface
+     * @var FactoryInterface
      */
     protected $factory;
 
     /**
-     * @var \Xervice\Core\Config\ConfigInterface
+     * @var ConfigInterface
      */
     private $config;
+
+    /**
+     * @var ClientInterface
+     */
+    private $client;
 
     /**
      * AbstractFacade constructor.
      *
      * @param \Xervice\Core\Factory\FactoryInterface $factory
      * @param \Xervice\Core\Config\ConfigInterface $config
+     * @param ClientInterface $client
      */
     public function __construct(
         FactoryInterface $factory,
-        ConfigInterface $config
+        ConfigInterface $config,
+        ClientInterface $client
     ) {
         $this->factory = $factory;
         $this->config = $config;
+        $this->client = $client;
     }
 
-
     /**
-     * @return \Xervice\Core\Config\ConfigInterface
+     * @return ConfigInterface
      */
-    public function getConfig()
+    public function getConfig() : ConfigInterface
     {
         return $this->config;
     }
 
     /**
-     * @return \Xervice\Core\Factory\FactoryInterface
+     * @return FactoryInterface
      */
-    public function getFactory()
+    public function getFactory() : FactoryInterface
     {
         return $this->factory;
+    }
+
+    /**
+     * @return \Xervice\Core\Client\ClientInterface
+     */
+    public function getClient(): ClientInterface
+    {
+        return $this->client;
     }
 }

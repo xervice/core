@@ -104,7 +104,8 @@ class XerviceLocatorProxy implements ProxyInterface
     }
 
     /**
-     * @return null|\Xervice\Core\Facade\FacadeInterface|\Xervice\Core\Factory\FactoryInterface
+     * @return null|\Xervice\Core\Facade\FacadeInterface
+     * @throws \Xervice\Core\Locator\Exception\LocatorClientNotFound
      * @throws \Xervice\Core\Locator\Exception\LocatorConfigNotFound
      * @throws \Xervice\Core\Locator\Exception\LocatorFacadeNotFound
      * @throws \Xervice\Core\Locator\Exception\LocatorFactoryNotFound
@@ -116,7 +117,8 @@ class XerviceLocatorProxy implements ProxyInterface
                 if (class_exists($class)) {
                     $this->facade = new $class(
                         $this->factory(),
-                        $this->config()
+                        $this->config(),
+                        $this->client()
                     );
                     break;
                 }
