@@ -1,10 +1,6 @@
 <?php
 
-
 namespace Xervice\Core\Dependency;
-
-
-use Pimple\ServiceProviderInterface;
 
 interface DependencyProviderInterface
 {
@@ -24,12 +20,12 @@ interface DependencyProviderInterface
     public function get(string $name);
 
     /**
-     * @param \Pimple\ServiceProviderInterface $provider
-     */
-    public function register(ServiceProviderInterface $provider);
-
-    /**
      * @return \Xervice\Core\Config\ConfigInterface
      */
     public function getConfig();
+
+    /**
+     * @return \Xervice\Generated\Ide\LocatorAutoComplete|\Xervice\Core\Locator\Locator
+     */
+    public function getLocator();
 }
