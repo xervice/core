@@ -25,7 +25,7 @@ interface DependencyProviderInterface
     public function getConfig();
 
     /**
-     * @return \Xervice\Generated\Ide\LocatorAutoComplete|\Xervice\Core\Locator\Locator
+     * @return \Generated\Ide\LocatorAutoComplete|\Xervice\Core\Locator\Locator
      */
     public function getLocator();
 }

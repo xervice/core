@@ -19,7 +19,7 @@ class Locator
     private $proxies = [];
 
     /**
-     * @return \Xervice\Generated\Ide\LocatorAutoComplete|\Xervice\Core\Locator\Locator
+     * @return \Generated\Ide\LocatorAutoComplete|\Xervice\Core\Locator\Locator
      */
     public static function getInstance()
     {

@@ -60,7 +60,7 @@ class DependencyProvider extends Container implements DependencyProviderInterfac
     }
 
     /**
-     * @return \Xervice\Core\Locator\Locator
+     * @return \Generated\Ide\LocatorAutoComplete|\Xervice\Core\Locator\Locator
      */
     public function getLocator()
     {
