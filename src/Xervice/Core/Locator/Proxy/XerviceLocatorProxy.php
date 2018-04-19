@@ -58,7 +58,7 @@ class XerviceLocatorProxy implements ProxyInterface
      */
     public function __construct(string $service)
     {
-        $this->service = $service;
+        $this->service = ucfirst($service);
     }
 
     /**
