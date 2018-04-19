@@ -4,17 +4,11 @@
 namespace Xervice\Core\Locator\Proxy;
 
 
-use Xervice\Config\XerviceConfig;
 use Xervice\Core\Client\EmptyClient;
 use Xervice\Core\Config\EmptyConfig;
-use Xervice\Core\CoreConfig;
 use Xervice\Core\Dependency\DependencyProvider;
 use Xervice\Core\Facade\EmptyFacade;
 use Xervice\Core\Factory\EmptyFactory;
-use Xervice\Core\Locator\Exception\LocatorClientNotFound;
-use Xervice\Core\Locator\Exception\LocatorConfigNotFound;
-use Xervice\Core\Locator\Exception\LocatorFacadeNotFound;
-use Xervice\Core\Locator\Exception\LocatorFactoryNotFound;
 use Xervice\Core\Locator\Locator;
 
 class XerviceLocatorProxy implements ProxyInterface
@@ -52,13 +46,19 @@ class XerviceLocatorProxy implements ProxyInterface
     private $config;
 
     /**
+     * @var string
+     */
+    private $projectNamespace;
+
+    /**
      * XerviceLocatorProxy constructor.
      *
      * @param string $service
      */
-    public function __construct(string $service)
+    public function __construct(string $service, string $projectNamespace)
     {
         $this->service = ucfirst($service);
+        $this->projectNamespace = $projectNamespace;
     }
 
     /**
@@ -219,7 +219,7 @@ class XerviceLocatorProxy implements ProxyInterface
      */
     private function getProjectLayerName()
     {
-        return XerviceConfig::getInstance()->getConfig()->get(CoreConfig::PROJECT_LAYER_NAMESPACE, 'App');
+        return $this->projectNamespace;
     }
 
     /**

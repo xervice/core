@@ -4,6 +4,8 @@
 namespace Xervice\Core\Locator;
 
 
+use Xervice\Config\XerviceConfig;
+use Xervice\Core\CoreConfig;
 use Xervice\Core\Locator\Proxy\XerviceLocatorProxy;
 
 class Locator
@@ -17,6 +19,22 @@ class Locator
      * @var array
      */
     private $proxies = [];
+
+    /**
+     * @var string
+     */
+    private $projectNamespace;
+
+    /**
+     * Locator constructor.
+     * @throws \Xervice\Config\Exception\ConfigNotFound
+     * @throws \Xervice\Config\Exception\FileNotFound
+     */
+    public function __construct()
+    {
+        $this->projectNamespace = XerviceConfig::getInstance()->getConfig()->get(CoreConfig::PROJECT_LAYER_NAMESPACE, 'App');
+    }
+
 
     /**
      * @return \Generated\Ide\LocatorAutoComplete|\Xervice\Core\Locator\Locator
@@ -38,7 +56,10 @@ class Locator
     public function __call($name, $arguments)
     {
         if (!isset($this->proxies[$name])) {
-            $this->proxies[$name] = new XerviceLocatorProxy($name);
+            $this->proxies[$name] = new XerviceLocatorProxy(
+                $name,
+                $this->projectNamespace
+            );
         }
 
         return $this->proxies[$name];
