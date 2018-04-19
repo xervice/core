@@ -28,7 +28,13 @@ class Locator
         }
         return self::$instance;
     }
-    
+
+    /**
+     * @param $name
+     * @param $arguments
+     *
+     * @return \Xervice\Core\Locator\Proxy\XerviceLocatorProxy
+     */
     public function __call($name, $arguments)
     {
         if (!isset($this->proxies[$name])) {
