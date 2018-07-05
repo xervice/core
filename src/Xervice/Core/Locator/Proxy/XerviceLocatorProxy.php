@@ -237,13 +237,15 @@ class XerviceLocatorProxy implements ProxyInterface
      */
     private function getServiceNamespaces(string $type): array
     {
-        $xerviceNamespaces = $this->additionalNamespaces;
+        $xerviceNamespaces = [];
+
+        foreach ($this->additionalNamespaces as $addNamespace) {
+            $xerviceNamespaces[] = $this->getNamespace($type, $addNamespace);
+        }
 
         $xerviceNamespaces[] = $this->getNamespace($type, $this->projectNamespace);
         $xerviceNamespaces[] = $this->getNamespace($type, 'Xervice');
 
         return $xerviceNamespaces;
     }
-
-}
 }
