@@ -26,6 +26,11 @@ class Locator
     private $projectNamespace;
 
     /**
+     * @var array
+     */
+    private $additionalNamespaces;
+
+    /**
      * Locator constructor.
      * @throws \Xervice\Config\Exception\ConfigNotFound
      * @throws \Xervice\Config\Exception\FileNotFound
@@ -33,6 +38,7 @@ class Locator
     public function __construct()
     {
         $this->projectNamespace = XerviceConfig::getInstance()->getConfig()->get(CoreConfig::PROJECT_LAYER_NAMESPACE, 'App');
+        $this->additionalNamespaces = XerviceConfig::getInstance()->getConfig()->get(CoreConfig::ADDITIONAL_LAYER_NAMESPACES, []);
     }
 
 
@@ -58,7 +64,8 @@ class Locator
         if (!isset($this->proxies[$name])) {
             $this->proxies[$name] = new XerviceLocatorProxy(
                 $name,
-                $this->projectNamespace
+                $this->projectNamespace,
+                $this->additionalNamespaces
             );
         }
 

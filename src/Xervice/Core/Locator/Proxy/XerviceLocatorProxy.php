@@ -51,14 +51,20 @@ class XerviceLocatorProxy implements ProxyInterface
     private $projectNamespace;
 
     /**
+     * @var array
+     */
+    private $additionalNamespaces;
+
+    /**
      * XerviceLocatorProxy constructor.
      *
      * @param string $service
      */
-    public function __construct(string $service, string $projectNamespace)
+    public function __construct(string $service, string $projectNamespace, array $additionalNamespaces = [])
     {
         $this->service = ucfirst($service);
         $this->projectNamespace = $projectNamespace;
+        $this->additionalNamespaces = $additionalNamespaces;
     }
 
     /**
@@ -231,11 +237,13 @@ class XerviceLocatorProxy implements ProxyInterface
      */
     private function getServiceNamespaces(string $type): array
     {
-        $xerviceNamespaces = [
-            $this->getNamespace($type, $this->getProjectLayerName()),
-            $this->getNamespace($type, 'Xervice')
-        ];
+        $xerviceNamespaces = $this->additionalNamespaces;
+
+        $xerviceNamespaces[] = $this->getNamespace($type, $this->projectNamespace);
+        $xerviceNamespaces[] = $this->getNamespace($type, 'Xervice');
+
         return $xerviceNamespaces;
     }
 
+}
 }
