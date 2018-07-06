@@ -2,3 +2,6 @@ build:
   tests:
     after:
       - bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml
+  environment:
+    variables:
+      CODECOV_TOKEN: 8a660111-1331-4b68-b641-516610efe4aa
