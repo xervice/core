@@ -10,17 +10,12 @@ use Xervice\Core\Dependency\Provider\ProviderInterface;
 use Xervice\Core\Locator\Locator;
 
 
-class DependencyProvider implements DependencyProviderInterface
+class DependencyProvider extends AbstractDependencyProvider implements DependencyProviderInterface
 {
     /**
      * @var \Xervice\Core\Config\ConfigInterface
      */
     private $config;
-
-    /**
-     * @var callable[]
-     */
-    private $container;
 
     /**
      * DependencyProvider constructor.

@@ -25,14 +25,24 @@ class IntegrationTest extends \Codeception\Test\Unit
     {
         $provider = new DependencyProvider(new CoreConfig());
         $provider->set(
-            "test", function () {
-            return "testings";
-        }
+            'test',
+            function () {
+                return 'testings';
+            }
+        );
+
+        $provider['test2'] = function () {
+            return 'testing2';
+        };
+
+        $this->assertEquals(
+            'testings',
+            $provider->get('test')
         );
 
         $this->assertEquals(
-            "testings",
-            $provider->get("test")
+            'testing2',
+            $provider->get('test2')
         );
     }
 
@@ -47,14 +57,15 @@ class IntegrationTest extends \Codeception\Test\Unit
         $container = new DependencyProvider(new CoreConfig());
 
         $provider = $this->getMockBuilder(AbstractProvider::class)
-                         ->setMethods(["handleDependencies"])
+                         ->setMethods(['handleDependencies'])
                          ->disableOriginalConstructor()
                          ->getMock();
 
         $provider->expects($this->once())
-                 ->method("handleDependencies")
+                 ->method('handleDependencies')
                  ->with($this->equalTo($container))
-                 ->willReturn($container);
+                 ->willReturn($container)
+        ;
 
         $container->register($provider);
     }

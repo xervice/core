@@ -7,7 +7,7 @@ use Xervice\Core\Config\ConfigInterface;
 use Xervice\Core\Dependency\Provider\ProviderInterface;
 use Xervice\Core\Locator\Locator;
 
-interface DependencyProviderInterface
+interface DependencyProviderInterface extends \ArrayAccess
 {
     /**
      * @param string $name
