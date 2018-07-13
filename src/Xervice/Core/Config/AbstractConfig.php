@@ -4,7 +4,9 @@
 namespace Xervice\Core\Config;
 
 
+use Xervice\Config\Exception\ConfigNotFound;
 use Xervice\Config\XerviceConfig;
+use Xervice\Core\Locator\Locator;
 
 abstract class AbstractConfig implements ConfigInterface
 {
@@ -15,6 +17,7 @@ abstract class AbstractConfig implements ConfigInterface
 
     /**
      * AbstractConfig constructor.
+     * @throws \Xervice\Config\Exception\FileNotFound
      */
     public function __construct()
     {
@@ -26,11 +29,14 @@ abstract class AbstractConfig implements ConfigInterface
      * @param mixed $default
      *
      * @return mixed
-     * @throws \Xervice\Config\Exception\ConfigNotFound
      */
     public function get(string $name, $default = null)
     {
-        return $this->config->get($name, $default);
+        try {
+            return $this->config->get($name, $default);
+        } catch (ConfigNotFound $exception) {
+            Locator::getInstance()->exceptionHandler()->facade()->handleException();
+        }
     }
 
 
