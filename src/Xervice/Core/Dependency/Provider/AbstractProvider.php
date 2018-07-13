@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\Core\Dependency\Provider;
 
 
-use Pimple\Container;
+use Xervice\Core\Dependency\DependencyProviderInterface;
 use Xervice\Core\Locator\Locator;
 
 abstract class AbstractProvider implements ProviderInterface
@@ -25,11 +26,11 @@ abstract class AbstractProvider implements ProviderInterface
     }
 
     /**
-     * @param \Pimple\Container $container
+     * @param \Xervice\Core\Dependency\DependencyProviderInterface $dependencyProvider
      */
-    public function register(Container $container)
+    public function register(DependencyProviderInterface $dependencyProvider): void
     {
-        $this->handleDependencies($container);
+        $this->handleDependencies($dependencyProvider);
     }
 
     /**

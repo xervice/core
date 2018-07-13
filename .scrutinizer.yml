@@ -1,4 +1,0 @@
-build:
-  tests:
-    after:
-      - bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml

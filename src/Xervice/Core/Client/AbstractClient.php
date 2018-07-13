@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\Core\Client;
@@ -36,7 +37,7 @@ abstract class AbstractClient implements ClientInterface
     /**
      * @return \Xervice\Core\Config\ConfigInterface
      */
-    public function getConfig()
+    public function getConfig(): ConfigInterface
     {
         return $this->config;
     }
@@ -44,12 +45,8 @@ abstract class AbstractClient implements ClientInterface
     /**
      * @return \Xervice\Core\Factory\FactoryInterface
      */
-    public function getFactory()
+    public function getFactory(): FactoryInterface
     {
         return $this->factory;
     }
-
-
-
-
 }

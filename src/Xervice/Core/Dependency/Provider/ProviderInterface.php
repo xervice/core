@@ -1,16 +1,16 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\Core\Dependency\Provider;
 
 
-use Pimple\ServiceProviderInterface;
 use Xervice\Core\Dependency\DependencyProviderInterface;
 
-interface ProviderInterface extends ServiceProviderInterface
+interface ProviderInterface
 {
     /**
-     * @param \Xervice\Core\Dependency\DependencyProviderInterface $container
+     * @param \Xervice\Core\Dependency\DependencyProviderInterface $dependencyProvider
      */
-    public function handleDependencies(DependencyProviderInterface $container);
+    public function handleDependencies(DependencyProviderInterface $dependencyProvider): void;
 }

@@ -21,6 +21,7 @@ class DynamicLocatorTest extends \Codeception\Test\Unit
      * @group Locator
      * @group Dynamic
      * @group DynamicLocator
+     * @throws \Core\Locator\Dynamic\ServiceNotParseable
      */
     public function testDynamicLocator()
     {

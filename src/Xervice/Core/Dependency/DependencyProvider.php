@@ -1,21 +1,26 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\Core\Dependency;
 
 
-use Pimple\Container;
-use Xervice\Config\XerviceConfig;
 use Xervice\Core\Config\ConfigInterface;
+use Xervice\Core\Dependency\Provider\ProviderInterface;
 use Xervice\Core\Locator\Locator;
 
 
-class DependencyProvider extends Container implements DependencyProviderInterface
+class DependencyProvider implements DependencyProviderInterface
 {
     /**
      * @var \Xervice\Core\Config\ConfigInterface
      */
     private $config;
+
+    /**
+     * @var callable[]
+     */
+    private $container;
 
     /**
      * DependencyProvider constructor.
@@ -34,9 +39,9 @@ class DependencyProvider extends Container implements DependencyProviderInterfac
      *
      * @return \Xervice\Core\Dependency\DependencyProviderInterface
      */
-    public function set(string $name, callable $function)
+    public function set(string $name, callable $function): DependencyProviderInterface
     {
-        $this[$name] = $function;
+        $this->container[$name] = $function;
 
         return $this;
     }
@@ -48,13 +53,13 @@ class DependencyProvider extends Container implements DependencyProviderInterfac
      */
     public function get(string $name)
     {
-        return $this[$name];
+        return $this->container[$name]();
     }
 
     /**
      * @return \Xervice\Core\Config\ConfigInterface
      */
-    public function getConfig()
+    public function getConfig(): ConfigInterface
     {
         return $this->config;
     }
@@ -62,8 +67,18 @@ class DependencyProvider extends Container implements DependencyProviderInterfac
     /**
      * @return \Generated\Ide\LocatorAutoComplete|\Xervice\Core\Locator\Locator
      */
-    public function getLocator()
+    public function getLocator(): Locator
     {
         return Locator::getInstance();
     }
+
+    /**
+     * @param \Xervice\Core\Dependency\Provider\ProviderInterface $provider
+     */
+    public function register(ProviderInterface $provider): void
+    {
+        $provider->handleDependencies($this);
+    }
+
+
 }

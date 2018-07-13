@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\Core\Locator\Exception;
@@ -15,7 +16,7 @@ class LocatorConfigNotFound extends XerviceException
      * @param int $code
      * @param \Throwable|null $previous
      */
-    public function __construct(string $message = "", int $code = 0, \Throwable $previous = null)
+    public function __construct(string $message = '', int $code = 0, \Throwable $previous = null)
     {
         $message = 'Config class for service ' . $message . ' not found';
         parent::__construct($message, $code, $previous);

@@ -1,19 +1,25 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\Core\Locator\Proxy;
 
 
+use Xervice\Core\Client\ClientInterface;
 use Xervice\Core\Client\EmptyClient;
+use Xervice\Core\Config\ConfigInterface;
 use Xervice\Core\Config\EmptyConfig;
 use Xervice\Core\Dependency\DependencyProvider;
+use Xervice\Core\Dependency\DependencyProviderInterface;
 use Xervice\Core\Facade\EmptyFacade;
+use Xervice\Core\Facade\FacadeInterface;
 use Xervice\Core\Factory\EmptyFactory;
+use Xervice\Core\Factory\FactoryInterface;
 use Xervice\Core\Locator\Locator;
 
 class XerviceLocatorProxy implements ProxyInterface
 {
-    const NAMESPACE_PROXY_FORMAT = '\%1$s\\%2$s\\%2$s%3$s';
+    private const NAMESPACE_PROXY_FORMAT = '\%1$s\\%2$s\\%2$s%3$s';
 
     /**
      * @var string
@@ -59,8 +65,10 @@ class XerviceLocatorProxy implements ProxyInterface
      * XerviceLocatorProxy constructor.
      *
      * @param string $service
+     * @param string $projectNamespace
+     * @param array $additionalNamespaces
      */
-    public function __construct(string $service, string $projectNamespace, array $additionalNamespaces = [])
+    public function __construct(string $service, string $projectNamespace, array $additionalNamespaces)
     {
         $this->service = ucfirst($service);
         $this->projectNamespace = $projectNamespace;
@@ -69,10 +77,8 @@ class XerviceLocatorProxy implements ProxyInterface
 
     /**
      * @return \Xervice\Core\Config\ConfigInterface
-     * @throws \Xervice\Config\Exception\ConfigNotFound
-     * @throws \Xervice\Config\Exception\FileNotFound
      */
-    public function config()
+    public function config(): ConfigInterface
     {
         if ($this->config === null) {
             foreach ($this->getServiceNamespaces('Config') as $class) {
@@ -91,10 +97,8 @@ class XerviceLocatorProxy implements ProxyInterface
 
     /**
      * @return \Xervice\Core\Factory\FactoryInterface
-     * @throws \Xervice\Config\Exception\ConfigNotFound
-     * @throws \Xervice\Config\Exception\FileNotFound
      */
-    public function factory()
+    public function factory(): FactoryInterface
     {
         if ($this->factory === null) {
             foreach ($this->getServiceNamespaces('Factory') as $class) {
@@ -119,10 +123,8 @@ class XerviceLocatorProxy implements ProxyInterface
 
     /**
      * @return \Xervice\Core\Facade\FacadeInterface
-     * @throws \Xervice\Config\Exception\ConfigNotFound
-     * @throws \Xervice\Config\Exception\FileNotFound
      */
-    public function facade()
+    public function facade(): FacadeInterface
     {
         if ($this->facade === null) {
             foreach ($this->getServiceNamespaces('Facade') as $class) {
@@ -149,10 +151,8 @@ class XerviceLocatorProxy implements ProxyInterface
 
     /**
      * @return \Xervice\Core\Client\ClientInterface
-     * @throws \Xervice\Config\Exception\ConfigNotFound
-     * @throws \Xervice\Config\Exception\FileNotFound
      */
-    public function client()
+    public function client(): ClientInterface
     {
         if ($this->client === null) {
             foreach ($this->getServiceNamespaces('Client') as $class) {
@@ -177,10 +177,8 @@ class XerviceLocatorProxy implements ProxyInterface
 
     /**
      * @return \Xervice\Core\Dependency\DependencyProviderInterface
-     * @throws \Xervice\Config\Exception\ConfigNotFound
-     * @throws \Xervice\Config\Exception\FileNotFound
      */
-    private function getContainer()
+    private function getContainer(): DependencyProviderInterface
     {
         if ($this->container === null) {
             $this->container = new DependencyProvider($this->config());
@@ -189,11 +187,7 @@ class XerviceLocatorProxy implements ProxyInterface
         return $this->container;
     }
 
-    /**
-     * @throws \Xervice\Config\Exception\ConfigNotFound
-     * @throws \Xervice\Config\Exception\FileNotFound
-     */
-    private function registerDependencies()
+    private function registerDependencies(): void
     {
         foreach ($this->getServiceNamespaces('DependencyProvider') as $class) {
             if (class_exists($class)) {
@@ -205,6 +199,7 @@ class XerviceLocatorProxy implements ProxyInterface
 
     /**
      * @param string $type
+     * @param string $layer
      *
      * @return string
      */
@@ -219,21 +214,9 @@ class XerviceLocatorProxy implements ProxyInterface
     }
 
     /**
-     * @return mixed
-     * @throws \Xervice\Config\Exception\ConfigNotFound
-     * @throws \Xervice\Config\Exception\FileNotFound
-     */
-    private function getProjectLayerName()
-    {
-        return $this->projectNamespace;
-    }
-
-    /**
      * @param string $type
      *
      * @return array
-     * @throws \Xervice\Config\Exception\ConfigNotFound
-     * @throws \Xervice\Config\Exception\FileNotFound
      */
     private function getServiceNamespaces(string $type): array
     {

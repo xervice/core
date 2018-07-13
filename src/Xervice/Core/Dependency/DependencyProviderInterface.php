@@ -1,6 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Xervice\Core\Dependency;
+
+use Xervice\Core\Config\ConfigInterface;
+use Xervice\Core\Dependency\Provider\ProviderInterface;
+use Xervice\Core\Locator\Locator;
 
 interface DependencyProviderInterface
 {
@@ -10,7 +15,7 @@ interface DependencyProviderInterface
      *
      * @return \Xervice\Core\Dependency\DependencyProviderInterface
      */
-    public function set(string $name, callable $function);
+    public function set(string $name, callable $function): DependencyProviderInterface;
 
     /**
      * @param string $name
@@ -22,10 +27,15 @@ interface DependencyProviderInterface
     /**
      * @return \Xervice\Core\Config\ConfigInterface
      */
-    public function getConfig();
+    public function getConfig(): ConfigInterface;
 
     /**
      * @return \Generated\Ide\LocatorAutoComplete|\Xervice\Core\Locator\Locator
      */
-    public function getLocator();
+    public function getLocator(): Locator;
+
+    /**
+     * @param \Xervice\Core\Dependency\Provider\ProviderInterface $provider
+     */
+    public function register(ProviderInterface $provider): void;
 }

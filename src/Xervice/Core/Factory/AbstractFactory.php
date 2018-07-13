@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\Core\Factory;
@@ -7,7 +8,7 @@ namespace Xervice\Core\Factory;
 use Xervice\Core\Config\ConfigInterface;
 use Xervice\Core\Dependency\DependencyProviderInterface;
 
-class AbstractFactory implements FactoryInterface
+abstract class AbstractFactory implements FactoryInterface
 {
     /**
      * @var \Xervice\Core\Dependency\DependencyProviderInterface
@@ -47,7 +48,7 @@ class AbstractFactory implements FactoryInterface
     /**
      * @return \Xervice\Core\Config\ConfigInterface
      */
-    protected function getConfig()
+    protected function getConfig(): ConfigInterface
     {
         return $this->config;
     }

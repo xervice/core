@@ -1,11 +1,16 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\Core\Locator\Dynamic;
 
 
 use Core\Locator\Dynamic\ServiceNotParseable;
+use Xervice\Core\Client\ClientInterface;
+use Xervice\Core\Facade\FacadeInterface;
+use Xervice\Core\Factory\FactoryInterface;
 use Xervice\Core\Locator\Locator;
+use Xervice\Core\Locator\Proxy\ProxyInterface;
 
 trait DynamicLocator
 {
@@ -13,7 +18,7 @@ trait DynamicLocator
      * @return \Xervice\Core\Factory\FactoryInterface
      * @throws \Core\Locator\Dynamic\ServiceNotParseable
      */
-    public function getFactory()
+    public function getFactory(): FactoryInterface
     {
         return $this->getLocator()->factory();
     }
@@ -22,7 +27,7 @@ trait DynamicLocator
      * @return \Xervice\Core\Facade\FacadeInterface
      * @throws \Core\Locator\Dynamic\ServiceNotParseable
      */
-    public function getFacade()
+    public function getFacade(): FacadeInterface
     {
         return $this->getLocator()->facade();
     }
@@ -31,7 +36,7 @@ trait DynamicLocator
      * @return \Xervice\Core\Client\ClientInterface
      * @throws \Core\Locator\Dynamic\ServiceNotParseable
      */
-    public function getClient()
+    public function getClient(): ClientInterface
     {
         return $this->getLocator()->client();
     }
@@ -40,7 +45,7 @@ trait DynamicLocator
      * @return \Xervice\Core\Locator\Proxy\ProxyInterface
      * @throws \Core\Locator\Dynamic\ServiceNotParseable
      */
-    private function getLocator()
+    private function getLocator(): ProxyInterface
     {
         return Locator::getInstance()->{$this->getServiceName()}();
     }
@@ -49,9 +54,9 @@ trait DynamicLocator
      * @return string
      * @throws \Core\Locator\Dynamic\ServiceNotParseable
      */
-    private function getServiceName()
+    private function getServiceName(): string
     {
-        if (!preg_match('@([A-Za-z]+)\\\\([A-Za-z]+)\\\\([A-Za-z\\\\]+)@', get_class($this), $matches)) {
+        if (!preg_match('@([A-Za-z]+)\\\\([A-Za-z]+)\\\\([A-Za-z\\\\]+)@', \get_class($this), $matches)) {
             throw new ServiceNotParseable(__NAMESPACE__);
         }
 

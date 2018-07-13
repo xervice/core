@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\Core\Locator;
@@ -32,13 +33,11 @@ class Locator
 
     /**
      * Locator constructor.
-     * @throws \Xervice\Config\Exception\ConfigNotFound
-     * @throws \Xervice\Config\Exception\FileNotFound
      */
     public function __construct()
     {
-        $this->projectNamespace = XerviceConfig::getInstance()->getConfig()->get(CoreConfig::PROJECT_LAYER_NAMESPACE, 'App');
-        $this->additionalNamespaces = XerviceConfig::getInstance()->getConfig()->get(CoreConfig::ADDITIONAL_LAYER_NAMESPACES, []);
+        $this->projectNamespace = $this->getConfig()->get(CoreConfig::PROJECT_LAYER_NAMESPACE, 'App');
+        $this->additionalNamespaces = $this->getConfig()->get(CoreConfig::ADDITIONAL_LAYER_NAMESPACES, []);
     }
 
 
@@ -70,6 +69,14 @@ class Locator
         }
 
         return $this->proxies[$name];
+    }
+
+    /**
+     * @return \Xervice\Config\Container\ConfigContainer
+     */
+    private function getConfig(): \Xervice\Config\Container\ConfigContainer
+    {
+        return XerviceConfig::getInstance()->getConfig();
     }
 
 }
