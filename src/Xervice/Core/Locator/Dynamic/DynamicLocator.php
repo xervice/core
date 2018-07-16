@@ -7,6 +7,7 @@ namespace Xervice\Core\Locator\Dynamic;
 
 use Core\Locator\Dynamic\ServiceNotParseable;
 use Xervice\Core\Client\ClientInterface;
+use Xervice\Core\Dependency\DependencyProviderInterface;
 use Xervice\Core\Facade\FacadeInterface;
 use Xervice\Core\Factory\FactoryInterface;
 use Xervice\Core\Locator\Locator;
@@ -39,6 +40,11 @@ trait DynamicLocator
     public function getClient(): ClientInterface
     {
         return $this->getLocator()->client();
+    }
+
+    public function getContainer(): DependencyProviderInterface
+    {
+        return $this->getLocator()->container();
     }
 
     /**

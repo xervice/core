@@ -6,6 +6,7 @@ namespace Xervice\Core\Locator\Proxy;
 
 
 use Xervice\Core\Client\ClientInterface;
+use Xervice\Core\Dependency\DependencyProviderInterface;
 use Xervice\Core\Facade\FacadeInterface;
 use Xervice\Core\Factory\FactoryInterface;
 
@@ -25,4 +26,9 @@ interface ProxyInterface
      * @return \Xervice\Core\Client\ClientInterface
      */
     public function client(): ClientInterface;
+
+    /**
+     * @return \Xervice\Core\Dependency\DependencyProviderInterface
+     */
+    public function container(): DependencyProviderInterface;
 }

@@ -9,6 +9,7 @@ interface ExceptionHandlerInterface
 {
     /**
      * @param \Exception $exception
+     * @param bool $isDebug
      */
-    public function handleException(\Exception $exception): void;
+    public function handleException(\Exception $exception, bool $isDebug): void;
 }

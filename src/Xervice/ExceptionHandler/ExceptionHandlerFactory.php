@@ -1,14 +1,13 @@
 <?php
 declare(strict_types=1);
 
-
 namespace Xervice\ExceptionHandler;
 
 
 use Xervice\ExceptionHandler\Business\Handler\DefaultExceptionHandler;
-use Xervice\ExceptionHandler\Business\Handler\ExceptionHandlerInterface;
-use Xervice\ExceptionHandler\Business\Printer\DebugPrinter;
-use Xervice\ExceptionHandler\Business\Printer\ExceptionPrinterInterface;
+use Xervice\ExceptionHandler\Business\Handler\HandlerCollection;
+use Xervice\ExceptionHandler\Business\Handler\HandlerProvider;
+use Xervice\ExceptionHandler\Business\Handler\HandlerProviderInterface;
 use Xervice\Core\Factory\AbstractFactory;
 
 /**
@@ -17,23 +16,21 @@ use Xervice\Core\Factory\AbstractFactory;
 class ExceptionHandlerFactory extends AbstractFactory
 {
     /**
-     * @return \Xervice\ExceptionHandler\Business\Handler\DefaultExceptionHandler
+     * @return \Xervice\ExceptionHandler\Business\Handler\HandlerProvider
      */
-    public function createExceptionHandler(): ExceptionHandlerInterface
+    public function createExceptionHandler(): HandlerProviderInterface
     {
-        return new DefaultExceptionHandler(
-            $this->createExceptionPrinter(),
-            $this->getConfig()->shutdownIfError()
+        return new HandlerProvider(
+            $this->getExceptionHandlerCollection(),
+            $this->getConfig()->isDebug()
         );
     }
 
     /**
-     * @return \Xervice\ExceptionHandler\Business\Printer\DebugPrinter
+     * @return \Xervice\ExceptionHandler\Business\Handler\HandlerCollection
      */
-    public function createExceptionPrinter(): ExceptionPrinterInterface
+    public function getExceptionHandlerCollection(): HandlerCollection
     {
-        return new DebugPrinter(
-            $this->getConfig()->isDebug()
-        );
+        return $this->getDependency(ExceptionHandlerDependencyProvider::EXCEPTION_HANDLER);
     }
 }

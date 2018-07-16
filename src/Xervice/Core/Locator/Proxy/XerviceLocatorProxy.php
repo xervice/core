@@ -104,7 +104,7 @@ class XerviceLocatorProxy implements ProxyInterface
             foreach ($this->getServiceNamespaces('Factory') as $class) {
                 if (class_exists($class)) {
                     $this->factory = new $class(
-                        $this->getContainer(),
+                        $this->container(),
                         $this->config()
                     );
                     break;
@@ -113,7 +113,7 @@ class XerviceLocatorProxy implements ProxyInterface
 
             if ($this->factory === null) {
                 $this->factory = new EmptyFactory(
-                    $this->getContainer(),
+                    $this->container(),
                     $this->config()
                 );
             }
@@ -178,7 +178,7 @@ class XerviceLocatorProxy implements ProxyInterface
     /**
      * @return \Xervice\Core\Dependency\DependencyProviderInterface
      */
-    private function getContainer(): DependencyProviderInterface
+    public function container(): DependencyProviderInterface
     {
         if ($this->container === null) {
             $this->container = new DependencyProvider($this->config());
