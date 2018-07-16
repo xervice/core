@@ -12,6 +12,11 @@ abstract class AbstractDependencyProvider implements DependencyProviderInterface
     protected $container;
 
     /**
+     * @var mixed[]
+     */
+    protected $values;
+
+    /**
      * @param mixed $offset
      *
      * @return bool
@@ -24,11 +29,11 @@ abstract class AbstractDependencyProvider implements DependencyProviderInterface
     /**
      * @param mixed $offset
      *
-     * @return callable
+     * @return mixed
      */
     public function offsetGet($offset)
     {
-        return $this->container[$offset];
+        return $this->get($offset);
     }
 
     /**

@@ -48,7 +48,7 @@ class DependencyProvider extends AbstractDependencyProvider implements Dependenc
      */
     public function get(string $name)
     {
-        return $this->container[$name]();
+        return $this->container[$name]($this);
     }
 
     /**
