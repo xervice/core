@@ -266,7 +266,7 @@ class MyModuleFactory extends AbstractFactory
 }
 ```
 
-Then you can use that methods as a dependency in other object instantiations. This way you can access the functionality from other modules without direct usage of that classes.
+Then you can use that methods as a dependency in other factory methods. This way you can access the functionality from other modules without direct usage of that classes.
 
 
 Client
@@ -277,14 +277,4 @@ The class structure is identicaly to your Facade class.
 
 Auto generating
 --------------------
-To generate a module you can use the xervicecli package:
-```
-composer global require xervice/xervicecli
-```
-
-***Using***
-```
-xervice xervice:create:service MyModule MyNamespace
-```
-
-That will create a new Module "MyModule" in the current directory.
+To generate a module you can use the [xervicecli](https://github.com/xervice/xervicecli) package.
