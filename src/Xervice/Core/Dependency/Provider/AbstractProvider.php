@@ -34,6 +34,16 @@ abstract class AbstractProvider implements ProviderInterface
     }
 
     /**
+     * @param string $module
+     * @param string $dependency
+     * @param callable $callable
+     */
+    protected function injectDependency(string $module, string $dependency, callable $callable): void
+    {
+        $this->getLocator()->$module()->container()->set($dependency, $callable);
+    }
+
+    /**
      * @return \Xervice\Core\Locator\Locator
      */
     protected function getLocator() : Locator

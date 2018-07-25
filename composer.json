@@ -18,7 +18,7 @@
   },
   "autoload": {
     "psr-4": {
-      "XerviceTest\\": "src/Xervice"
+      "XerviceTest\\": "tests/Xervice/"
     },
     "psr-0": {
       "Test\\": "src/",

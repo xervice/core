@@ -2,12 +2,11 @@
 
 namespace XerviceTest\Core\Dependency;
 
-use Xervice\Config\Container\ConfigContainer;
-use Xervice\Core\Config\ConfigInterface;
 use Xervice\Core\CoreConfig;
 use Xervice\Core\Dependency\DependencyProvider;
 use Xervice\Core\Dependency\DependencyProviderInterface;
 use Xervice\Core\Dependency\Provider\AbstractProvider;
+use XerviceTest\Core\Dependency\Provider\TestProvider;
 
 class IntegrationTest extends \Codeception\Test\Unit
 {
@@ -96,6 +95,23 @@ class IntegrationTest extends \Codeception\Test\Unit
         $this->assertEquals(
             'myTestWithoutArgument--WithParam',
             $container->get('myTestWithArgument')
+        );
+    }
+
+    /**
+     * @group Xervice
+     * @group Core
+     * @group Dependency
+     * @group Integration
+     */
+    public function testInjectingDependency()
+    {
+        $container = new DependencyProvider(new CoreConfig());
+        $container->register(new TestProvider($container->getLocator()));
+
+        $this->assertEquals(
+            'TestValue',
+            $container->get(TestProvider::TEST_VALUE)
         );
     }
 
