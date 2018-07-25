@@ -3,6 +3,7 @@ Xervice: Core
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/xervice/core/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/xervice/core/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/xervice/core/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/xervice/core/?branch=master)
+[![Build Status](https://travis-ci.org/xervice/core.svg?branch=master)](https://travis-ci.org/xervice/core)
 
 Core classes for Xervice services
 
