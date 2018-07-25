@@ -74,6 +74,24 @@ $locator->myModule()->facade();
 Your should not use the config and dependency-provider in an external scope. It's only for using inside your module.
 
 
+Extending
+-----------
+To extend a module, you can create a directory with the same name in an upper level namespace. The order of the namespaces is:
+1. Xervice
+2. Project namespace (Default: App)
+3. Additional namespaces in defined order
+
+If you have an module in the Xervice namespace, you can overwrite the classes in your Projectnamespaces.
+And that logic you can also extend in your additional namespaces.
+
+***Example***
+You have a module in Xervice namespace with a factory and you want to change one of that classes.
+In that case you create a directory with the same name like your xervice module.
+There you create an new Factory-Class and extend from the original Factory in your Xervice module.
+Then you overwrite the method you want to change. After that the locator will use your factory instead of the xervice factory.
+You don't have to create all classes in your extending module.
+
+
 Facade
 ---------
 The Facade is your interface for external usage. In that class you define your public methods, that you want to open for other modules.
@@ -82,9 +100,7 @@ The Facade is your interface for external usage. In that class you define your p
 ```php
 <?php
 
-
-namespace Ap\MyModule;
-
+namespace App\MyModule;
 
 use Xervice\Core\Facade\AbstractFacade;
 
