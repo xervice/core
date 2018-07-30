@@ -8,6 +8,9 @@ use Xervice\Core\CoreClient;
 use Xervice\Core\CoreFactory;
 use Xervice\Core\Facade\EmptyFacade;
 use Xervice\Core\Factory\EmptyFactory;
+use XerviceTest\Core\Locator\TestInjector\TestProxy;
+
+require_once __DIR__ . '/TestInjector/CoreFactory.php';
 
 class IntegrationTest extends \Codeception\Test\Unit
 {
@@ -55,6 +58,26 @@ class IntegrationTest extends \Codeception\Test\Unit
         $this->assertInstanceOf(
             CoreClient::class,
             $this->tester->getLocator()->core()->client()
+        );
+    }
+
+    /**
+     * @group Xervice
+     * @group Core
+     * @group Locator
+     * @group Integration
+     * @group Fail
+     */
+    public function testLocatorGetFactoryProxy()
+    {
+        $this->assertInstanceOf(
+            TestProxy::class,
+            $this->tester->getLocator()->notexist()
+        );
+
+        $this->assertEquals(
+            'MyTest',
+            $this->tester->getLocator()->notexist()->testing()
         );
     }
 

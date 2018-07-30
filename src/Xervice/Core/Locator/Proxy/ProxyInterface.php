@@ -1,17 +1,20 @@
 <?php
-declare(strict_types=1);
-
 
 namespace Xervice\Core\Locator\Proxy;
 
-
 use Xervice\Core\Client\ClientInterface;
+use Xervice\Core\Config\ConfigInterface;
 use Xervice\Core\Dependency\DependencyProviderInterface;
 use Xervice\Core\Facade\FacadeInterface;
 use Xervice\Core\Factory\FactoryInterface;
 
 interface ProxyInterface
 {
+    /**
+     * @return \Xervice\Core\Config\ConfigInterface
+     */
+    public function config(): ConfigInterface;
+
     /**
      * @return \Xervice\Core\Factory\FactoryInterface
      */

@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Xervice\Core;
+namespace Test\Core;
 
 
-use Xervice\Core\Factory\AbstractFactory;
+use Xervice\Core\CoreFactory as XerviceCoreFactory;
 use Xervice\Core\Locator\Proxy\ProxyInterface;
-use Xervice\Core\Locator\Proxy\XerviceLocatorProxy;
+use XerviceTest\Core\Locator\TestInjector\TestProxy;
 
-class CoreFactory extends AbstractFactory
+class CoreFactory extends XerviceCoreFactory
 {
     /**
      * @param string $service
@@ -19,10 +19,11 @@ class CoreFactory extends AbstractFactory
      */
     public function createXerviceLocatorProxy(string $service, string $projectNamespace, array $additionalNamespaces): ProxyInterface
     {
-        return new XerviceLocatorProxy(
+        return new TestProxy(
             $service,
             $projectNamespace,
             $additionalNamespaces
         );
     }
+
 }

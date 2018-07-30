@@ -61,11 +61,7 @@ class Locator
     public function __call($name, $arguments)
     {
         if (!isset($this->proxies[$name])) {
-            $this->proxies[$name] = new XerviceLocatorProxy(
-                $name,
-                $this->projectNamespace,
-                $this->additionalNamespaces
-            );
+            $this->getLocatorProxy($name);
         }
 
         return $this->proxies[$name];
@@ -77,6 +73,26 @@ class Locator
     private function getConfig(): \Xervice\Config\Container\ConfigContainer
     {
         return XerviceConfig::getInstance()->getConfig();
+    }
+
+    /**
+     * @param $name
+     */
+    private function getLocatorProxy($name): void
+    {
+        if ($name === 'core') {
+            $this->proxies[$name] = new XerviceLocatorProxy(
+                $name,
+                $this->projectNamespace,
+                $this->additionalNamespaces
+            );
+        } else {
+            $this->proxies[$name] = $this->core()->factory()->createXerviceLocatorProxy(
+                $name,
+                $this->projectNamespace,
+                $this->additionalNamespaces
+            );
+        }
     }
 
 }
