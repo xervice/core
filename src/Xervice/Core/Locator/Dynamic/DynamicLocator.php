@@ -42,6 +42,10 @@ trait DynamicLocator
         return $this->getLocator()->client();
     }
 
+    /**
+     * @return \Xervice\Core\Dependency\DependencyProviderInterface
+     * @throws \Core\Locator\Dynamic\ServiceNotParseable
+     */
     public function getContainer(): DependencyProviderInterface
     {
         return $this->getLocator()->container();
