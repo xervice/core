@@ -313,6 +313,12 @@ Client
 The client is similar to your facade. But in the client you provide functions to access external systems like a database or external api via your module.
 The class structure is identicaly to your Facade class.
 
+Dynamic
+-----------
+If you create a class with name "ModouleName<Suffix>", you can get an instance of that class by using the locator:
+```php
+$locator->myModule()->suffix() // will look for a class MyModuleSuffix in your module root path.
+```
 
 Auto generating
 --------------------
