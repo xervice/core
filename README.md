@@ -45,6 +45,7 @@ You can define Helper classes by implementing HelperInterface. If you define the
 namespace App\MyModule\Locator\Helper;
 
 use Xervice\Core\HelperClass\HelperInterface;
+use Xervice\Core\Locator\Proxy\ProxyInterface;
 
 class TestHelper implements HelperInterface
 {
@@ -53,21 +54,23 @@ class TestHelper implements HelperInterface
      */
     public function getMethodName(): string
     {
-        return 'myTest';
+        return 'myHelper';
     }
 
     /**
+     * @param \Xervice\Core\Locator\Proxy\ProxyInterface $proxy
+     *
      * @return mixed|string
      */
-    public function getHelper(): string
+    public function getHelper(ProxyInterface $proxy)
     {
-        return 'TestValue'; // Or anything else
+        return $proxy->getServiceName();
     }
 }
 ```
 
 ```php
-Xervice\Core\Locator\Locator::getInstance()->myModule()->myTest() // will return 'TestValue'
+Xervice\Core\Locator\Locator::getInstance()->myModule()->myHelper() // will return 'myModule'
 ```
 
 
