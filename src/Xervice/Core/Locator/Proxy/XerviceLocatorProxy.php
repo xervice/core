@@ -103,7 +103,7 @@ class XerviceLocatorProxy implements ProxyInterface
             if (!isset($this->helperList[$name])) {
                 foreach ($this->helperCollection as $helper) {
                     if ($helper->getMethodName() === $name) {
-                        $this->helperList[$name] = $helper->getHelper($this->service);
+                        $this->helperList[$name] = $helper->getHelper($this);
                         break;
                     }
                 }
@@ -226,6 +226,33 @@ class XerviceLocatorProxy implements ProxyInterface
         return $this->container;
     }
 
+    /**
+     * @param string $type
+     *
+     * @return array
+     */
+    public function getServiceNamespaces(string $type): array
+    {
+        $xerviceNamespaces = [];
+
+        foreach ($this->additionalNamespaces as $addNamespace) {
+            $xerviceNamespaces[] = $this->getNamespace($type, $addNamespace);
+        }
+
+        $xerviceNamespaces[] = $this->getNamespace($type, $this->projectNamespace);
+        $xerviceNamespaces[] = $this->getNamespace($type, 'Xervice');
+
+        return $xerviceNamespaces;
+    }
+
+    /**
+     * @return string
+     */
+    public function getServiceName(): string
+    {
+        return $this->service;
+    }
+
     private function registerDependencies(): void
     {
         foreach ($this->getServiceNamespaces('DependencyProvider') as $class) {
@@ -247,27 +274,8 @@ class XerviceLocatorProxy implements ProxyInterface
         return sprintf(
             self::NAMESPACE_PROXY_FORMAT,
             $layer,
-            $this->service,
+            $this->getServiceName(),
             $type
         );
-    }
-
-    /**
-     * @param string $type
-     *
-     * @return array
-     */
-    private function getServiceNamespaces(string $type): array
-    {
-        $xerviceNamespaces = [];
-
-        foreach ($this->additionalNamespaces as $addNamespace) {
-            $xerviceNamespaces[] = $this->getNamespace($type, $addNamespace);
-        }
-
-        $xerviceNamespaces[] = $this->getNamespace($type, $this->projectNamespace);
-        $xerviceNamespaces[] = $this->getNamespace($type, 'Xervice');
-
-        return $xerviceNamespaces;
     }
 }

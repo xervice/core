@@ -4,6 +4,8 @@
 namespace Xervice\Core\HelperClass;
 
 
+use Xervice\Core\Locator\Proxy\ProxyInterface;
+
 interface HelperInterface
 {
     /**
@@ -12,9 +14,9 @@ interface HelperInterface
     public function getMethodName(): string;
 
     /**
-     * @param string $serviceName
+     * @param \Xervice\Core\Locator\Proxy\ProxyInterface $proxy
      *
      * @return mixed
      */
-    public function getHelper(string $serviceName);
+    public function getHelper(ProxyInterface $proxy);
 }

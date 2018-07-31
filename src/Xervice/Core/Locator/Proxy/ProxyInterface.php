@@ -34,4 +34,16 @@ interface ProxyInterface
      * @return \Xervice\Core\Dependency\DependencyProviderInterface
      */
     public function container(): DependencyProviderInterface;
+
+    /**
+     * @param string $type
+     *
+     * @return array
+     */
+    public function getServiceNamespaces(string $type): array;
+
+    /**
+     * @return string
+     */
+    public function getServiceName(): string;
 }

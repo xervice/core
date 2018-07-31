@@ -5,6 +5,7 @@ namespace XerviceTest\Core\Locator\Helper;
 
 
 use Xervice\Core\HelperClass\HelperInterface;
+use Xervice\Core\Locator\Proxy\ProxyInterface;
 
 class TestHelper implements HelperInterface
 {
@@ -17,11 +18,14 @@ class TestHelper implements HelperInterface
     }
 
     /**
+     * @param \Xervice\Core\Locator\Proxy\ProxyInterface $proxy
+     *
      * @return mixed|string
      */
-    public function getHelper(string $serviceName): string
+    public function getHelper(ProxyInterface $proxy)
     {
-        return $serviceName;
+        return $proxy->getServiceName();
     }
+
 
 }
