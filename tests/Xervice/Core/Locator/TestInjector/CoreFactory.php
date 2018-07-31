@@ -22,7 +22,8 @@ class CoreFactory extends XerviceCoreFactory
         return new TestProxy(
             $service,
             $projectNamespace,
-            $additionalNamespaces
+            $additionalNamespaces,
+            $this->getHelperCollection()
         );
     }
 

@@ -5,6 +5,7 @@ namespace Xervice\Core;
 
 
 use Xervice\Core\Factory\AbstractFactory;
+use Xervice\Core\HelperClass\HelperCollection;
 use Xervice\Core\Locator\Proxy\ProxyInterface;
 use Xervice\Core\Locator\Proxy\XerviceLocatorProxy;
 
@@ -22,7 +23,16 @@ class CoreFactory extends AbstractFactory
         return new XerviceLocatorProxy(
             $service,
             $projectNamespace,
-            $additionalNamespaces
+            $additionalNamespaces,
+            $this->getHelperCollection()
         );
+    }
+
+    /**
+     * @return \Xervice\Core\HelperClass\HelperCollection
+     */
+    public function getHelperCollection(): HelperCollection
+    {
+        return $this->getDependency(CoreDependencyProvider::CLASS_PROVIDER_COLLECTION);
     }
 }

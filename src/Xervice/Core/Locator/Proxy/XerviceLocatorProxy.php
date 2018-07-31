@@ -15,6 +15,7 @@ use Xervice\Core\Facade\EmptyFacade;
 use Xervice\Core\Facade\FacadeInterface;
 use Xervice\Core\Factory\EmptyFactory;
 use Xervice\Core\Factory\FactoryInterface;
+use Xervice\Core\HelperClass\HelperCollection;
 use Xervice\Core\Locator\Locator;
 
 class XerviceLocatorProxy implements ProxyInterface
@@ -62,18 +63,56 @@ class XerviceLocatorProxy implements ProxyInterface
     private $additionalNamespaces;
 
     /**
+     * @var \Xervice\Core\HelperClass\HelperCollection
+     */
+    private $helperCollection;
+
+    /**
+     * @var array
+     */
+    private $helperList;
+
+    /**
      * XerviceLocatorProxy constructor.
      *
      * @param string $service
      * @param string $projectNamespace
      * @param array $additionalNamespaces
+     * @param \Xervice\Core\HelperClass\HelperCollection|null $helperCollection
      */
-    public function __construct(string $service, string $projectNamespace, array $additionalNamespaces)
-    {
+    public function __construct(
+        string $service,
+        string $projectNamespace,
+        array $additionalNamespaces,
+        HelperCollection $helperCollection = null
+    ) {
         $this->service = ucfirst($service);
         $this->projectNamespace = $projectNamespace;
         $this->additionalNamespaces = $additionalNamespaces;
+        $this->helperCollection = $helperCollection;
+        $this->helperList = [];
     }
+
+    /**
+     * @param $name
+     * @param $arguments
+     */
+    public function __call($name, $arguments)
+    {
+        if (!method_exists($this, $name) && $this->helperCollection !== null) {
+            if (!isset($this->helperList[$name])) {
+                foreach ($this->helperCollection as $helper) {
+                    if ($helper->getMethodName() === $name) {
+                        $this->helperList[$name] = $helper->getHelper();
+                        break;
+                    }
+                }
+            }
+
+            return $this->helperList[$name] ?? null;
+        }
+    }
+
 
     /**
      * @return \Xervice\Core\Config\ConfigInterface
