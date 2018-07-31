@@ -19,9 +19,9 @@ class TestHelper implements HelperInterface
     /**
      * @return mixed|string
      */
-    public function getHelper(): string
+    public function getHelper(string $serviceName): string
     {
-        return 'TestValue';
+        return $serviceName;
     }
 
 }

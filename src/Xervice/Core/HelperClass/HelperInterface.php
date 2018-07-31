@@ -12,7 +12,9 @@ interface HelperInterface
     public function getMethodName(): string;
 
     /**
+     * @param string $serviceName
+     *
      * @return mixed
      */
-    public function getHelper();
+    public function getHelper(string $serviceName);
 }

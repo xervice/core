@@ -103,7 +103,7 @@ class XerviceLocatorProxy implements ProxyInterface
             if (!isset($this->helperList[$name])) {
                 foreach ($this->helperCollection as $helper) {
                     if ($helper->getMethodName() === $name) {
-                        $this->helperList[$name] = $helper->getHelper();
+                        $this->helperList[$name] = $helper->getHelper($this->service);
                         break;
                     }
                 }

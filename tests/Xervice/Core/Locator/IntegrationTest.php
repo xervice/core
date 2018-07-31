@@ -71,8 +71,8 @@ class IntegrationTest extends \Codeception\Test\Unit
     public function testLocatorGetHelper()
     {
         $this->assertEquals(
-            'TestValue',
-            $this->tester->getLocator()->test()->myTest()
+            'TestServ',
+            $this->tester->getLocator()->testServ()->myTest()
         );
     }
 
