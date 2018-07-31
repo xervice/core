@@ -36,6 +36,41 @@ $config[CoreConfig::ADDITIONAL_LAYER_NAMESPACES] = [
 ];
 ```
 
+***Extending the LocatorProxy***
+You can define Helper classes by implementing HelperInterface. If you define them in the CoreDepenendecyProvider, you can use them over the locator.
+
+```php
+<?php
+
+namespace App\MyModule\Locator\Helper;
+
+use Xervice\Core\HelperClass\HelperInterface;
+
+class TestHelper implements HelperInterface
+{
+    /**
+     * @return string
+     */
+    public function getMethodName(): string
+    {
+        return 'myTest';
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function getHelper(): string
+    {
+        return 'TestValue'; // Or anything else
+    }
+}
+```
+
+```php
+Xervice\Core\Locator\Locator::getInstance()->myModule()->myTest() // will return 'TestValue'
+```
+
+
 Usage
 -------------
 
