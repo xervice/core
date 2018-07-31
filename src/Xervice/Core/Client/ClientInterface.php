@@ -6,8 +6,9 @@ namespace Xervice\Core\Client;
 
 
 use Xervice\Core\Config\ConfigInterface;
+use Xervice\Core\ServiceClass\XerviceInterface;
 
-interface ClientInterface
+interface ClientInterface extends XerviceInterface
 {
     /**
      * @return \Xervice\Core\Config\ConfigInterface

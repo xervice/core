@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Xervice\Core\Config;
 
 
-interface ConfigInterface
+use Xervice\Core\ServiceClass\XerviceInterface;
+
+interface ConfigInterface extends XerviceInterface
 {
     /**
      * @param string $name

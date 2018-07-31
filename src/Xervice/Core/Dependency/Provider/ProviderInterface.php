@@ -6,8 +6,9 @@ namespace Xervice\Core\Dependency\Provider;
 
 
 use Xervice\Core\Dependency\DependencyProviderInterface;
+use Xervice\Core\ServiceClass\XerviceInterface;
 
-interface ProviderInterface
+interface ProviderInterface extends XerviceInterface
 {
     /**
      * @param \Xervice\Core\Dependency\DependencyProviderInterface $dependencyProvider

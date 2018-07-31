@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Xervice\Core\Factory;
 
 
-interface FactoryInterface
+use Xervice\Core\ServiceClass\XerviceInterface;
+
+interface FactoryInterface extends XerviceInterface
 {
 
 }

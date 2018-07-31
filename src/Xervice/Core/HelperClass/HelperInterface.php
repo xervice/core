@@ -5,6 +5,7 @@ namespace Xervice\Core\HelperClass;
 
 
 use Xervice\Core\Locator\Proxy\ProxyInterface;
+use Xervice\Core\ServiceClass\XerviceInterface;
 
 interface HelperInterface
 {
@@ -16,7 +17,7 @@ interface HelperInterface
     /**
      * @param \Xervice\Core\Locator\Proxy\ProxyInterface $proxy
      *
-     * @return mixed
+     * @return \Xervice\Core\ServiceClass\XerviceInterface
      */
-    public function getHelper(ProxyInterface $proxy);
+    public function getHelper(ProxyInterface $proxy): XerviceInterface;
 }

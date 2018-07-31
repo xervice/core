@@ -5,9 +5,12 @@ namespace XerviceTest\Core\Locator;
 use Test\Core\CoreFacade;
 use Xervice\Core\Client\EmptyClient;
 use Xervice\Core\CoreClient;
+use Xervice\Core\CoreConfig;
 use Xervice\Core\CoreFactory;
+use Xervice\Core\CoreTest;
 use Xervice\Core\Facade\EmptyFacade;
 use Xervice\Core\Factory\EmptyFactory;
+use Xervice\Core\ServiceClass\XerviceInterface;
 use XerviceTest\Core\Locator\TestInjector\TestProxy;
 
 require_once __DIR__ . '/TestInjector/CoreFactory.php';
@@ -70,9 +73,37 @@ class IntegrationTest extends \Codeception\Test\Unit
      */
     public function testLocatorGetHelper()
     {
-        $this->assertEquals(
-            'TestServ',
+        $this->assertInstanceOf(
+            CoreConfig::class,
             $this->tester->getLocator()->testServ()->myTest()
+        );
+    }
+
+    /**
+     * @group Xervice
+     * @group Core
+     * @group Locator
+     * @group Integration
+     */
+    public function testLocatorAnyNotExistingDynamic()
+    {
+        $this->assertInstanceOf(
+            XerviceInterface::class,
+            $this->tester->getLocator()->testServ()->anyDynamicClass()
+        );
+    }
+
+    /**
+     * @group Xervice
+     * @group Core
+     * @group Locator
+     * @group Integration
+     */
+    public function testLocatorExistingDynamic()
+    {
+        $this->assertInstanceOf(
+            CoreTest::class,
+            $this->tester->getLocator()->core()->Test()
         );
     }
 

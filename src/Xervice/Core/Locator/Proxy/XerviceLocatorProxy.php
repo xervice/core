@@ -17,6 +17,8 @@ use Xervice\Core\Factory\EmptyFactory;
 use Xervice\Core\Factory\FactoryInterface;
 use Xervice\Core\HelperClass\HelperCollection;
 use Xervice\Core\Locator\Locator;
+use Xervice\Core\ServiceClass\EmptyXervice;
+use Xervice\Core\ServiceClass\XerviceInterface;
 
 class XerviceLocatorProxy implements ProxyInterface
 {
@@ -96,23 +98,13 @@ class XerviceLocatorProxy implements ProxyInterface
     /**
      * @param $name
      * @param $arguments
+     *
+     * @return mixed|null
      */
     public function __call($name, $arguments)
     {
-        if (!method_exists($this, $name) && $this->helperCollection !== null) {
-            if (!isset($this->helperList[$name])) {
-                foreach ($this->helperCollection as $helper) {
-                    if ($helper->getMethodName() === $name) {
-                        $this->helperList[$name] = $helper->getHelper($this);
-                        break;
-                    }
-                }
-            }
-
-            return $this->helperList[$name] ?? null;
-        }
+        return !method_exists($this, $name) ? $this->dynamic($name) : null;
     }
-
 
     /**
      * @return \Xervice\Core\Config\ConfigInterface
@@ -264,12 +256,34 @@ class XerviceLocatorProxy implements ProxyInterface
     }
 
     /**
+     * @param $name
+     *
+     * @return \Xervice\Core\ServiceClass\XerviceInterface
+     */
+    protected function dynamic($name): XerviceInterface
+    {
+        if (!isset($this->helperList[$name])) {
+            $this->getDynamicClassFromName($name);
+        }
+
+        if (!isset($this->helperList[$name])) {
+            $this->getHelperFromName($name);
+        }
+
+        if (!isset($this->helperList[$name])) {
+            $this->getEmptyXervice($name);
+        }
+
+        return $this->helperList[$name];
+    }
+
+    /**
      * @param string $type
      * @param string $layer
      *
      * @return string
      */
-    private function getNamespace(string $type, string $layer): string
+    protected function getNamespace(string $type, string $layer): string
     {
         return sprintf(
             self::NAMESPACE_PROXY_FORMAT,
@@ -277,5 +291,45 @@ class XerviceLocatorProxy implements ProxyInterface
             $this->getServiceName(),
             $type
         );
+    }
+
+    /**
+     * @param $name
+     */
+    protected function getHelperFromName($name): void
+    {
+        if ($this->helperCollection instanceof HelperCollection) {
+            foreach ($this->helperCollection as $helper) {
+                if ($helper->getMethodName() === $name) {
+                    $this->helperList[$name] = $helper->getHelper($this);
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * @param $name
+     */
+    protected function getEmptyXervice($name): void
+    {
+        $this->helperList[$name] = new EmptyXervice(
+            $this->config()
+        );
+    }
+
+    /**
+     * @param $name
+     */
+    protected function getDynamicClassFromName($name): void
+    {
+        foreach ($this->getServiceNamespaces(ucfirst($name)) as $class) {
+            if (class_exists($class)) {
+                $this->helperList[$name] = new $class(
+                    $this->config()
+                );
+                break;
+            }
+        }
     }
 }

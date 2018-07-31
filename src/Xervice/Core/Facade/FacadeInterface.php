@@ -6,8 +6,9 @@ namespace Xervice\Core\Facade;
 use Xervice\Core\Client\ClientInterface;
 use Xervice\Core\Config\ConfigInterface;
 use Xervice\Core\Factory\FactoryInterface;
+use Xervice\Core\ServiceClass\XerviceInterface;
 
-interface FacadeInterface
+interface FacadeInterface extends XerviceInterface
 {
     /**
      * @return ConfigInterface
