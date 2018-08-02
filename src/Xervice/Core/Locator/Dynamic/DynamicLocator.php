@@ -64,7 +64,7 @@ trait DynamicLocator
      * @return string
      * @throws \Core\Locator\Dynamic\ServiceNotParseable
      */
-    private function getServiceName(): string
+    public function getServiceName(): string
     {
         if (!preg_match('@([A-Za-z]+)\\\\([A-Za-z]+)\\\\([A-Za-z\\\\]+)@', \get_class($this), $matches)) {
             throw new ServiceNotParseable(__NAMESPACE__);
