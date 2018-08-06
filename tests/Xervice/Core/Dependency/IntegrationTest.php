@@ -107,7 +107,7 @@ class IntegrationTest extends \Codeception\Test\Unit
     public function testInjectingDependency()
     {
         $container = new DependencyProvider(new CoreConfig());
-        $container->register(new TestProvider($container->getLocator()));
+        $container->register(new TestProvider($container->getLocator(), new CoreConfig()));
 
         $this->assertEquals(
             'TestValue',

@@ -27,7 +27,7 @@ abstract class AbstractProvider implements ProviderInterface
      * @param \Xervice\Core\Locator\Locator $locator
      * @param \Xervice\Core\Config\ConfigInterface $config
      */
-    public function __construct(Locator $locator, ConfigInterface $config = null)
+    public function __construct(Locator $locator, ConfigInterface $config)
     {
         $this->locator = $locator;
         $this->config = $config;
