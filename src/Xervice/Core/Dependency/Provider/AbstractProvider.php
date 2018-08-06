@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xervice\Core\Dependency\Provider;
 
 
+use Xervice\Core\Config\ConfigInterface;
 use Xervice\Core\Dependency\DependencyProviderInterface;
 use Xervice\Core\Locator\Locator;
 
@@ -16,13 +17,20 @@ abstract class AbstractProvider implements ProviderInterface
     private $locator;
 
     /**
+     * @var \Xervice\Core\Config\ConfigInterface
+     */
+    private $config;
+
+    /**
      * AbstractProvider constructor.
      *
      * @param \Xervice\Core\Locator\Locator $locator
+     * @param \Xervice\Core\Config\ConfigInterface $config
      */
-    public function __construct(Locator $locator)
+    public function __construct(Locator $locator, ConfigInterface $config)
     {
         $this->locator = $locator;
+        $this->config = $config;
     }
 
     /**
@@ -49,5 +57,13 @@ abstract class AbstractProvider implements ProviderInterface
     protected function getLocator() : Locator
     {
         return $this->locator;
+    }
+
+    /**
+     * @return \Xervice\Core\Config\ConfigInterface
+     */
+    protected function getConfig(): ConfigInterface
+    {
+        return $this->config;
     }
 }

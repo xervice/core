@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xervice\Core\Dependency\Provider;
 
 
+use Xervice\Core\Config\ConfigInterface;
 use Xervice\Core\Dependency\DependencyProviderInterface;
 use Xervice\Core\ServiceClass\XerviceInterface;
 

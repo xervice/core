@@ -249,7 +249,12 @@ class XerviceLocatorProxy implements ProxyInterface
     {
         foreach ($this->getServiceNamespaces('DependencyProvider') as $class) {
             if (class_exists($class)) {
-                $this->container->register(new $class(Locator::getInstance()));
+                $this->container->register(
+                    new $class(
+                        Locator::getInstance(),
+                        $this->config()
+                    )
+                );
                 break;
             }
         }
