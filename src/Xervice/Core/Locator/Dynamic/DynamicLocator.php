@@ -16,6 +16,21 @@ use Xervice\Core\Locator\Proxy\ProxyInterface;
 trait DynamicLocator
 {
     /**
+     * @param $name
+     * @param $arguments
+     *
+     * @return mixed
+     * @throws \Core\Locator\Dynamic\ServiceNotParseable
+     */
+    public function __call($name, $arguments)
+    {
+        if (!method_exists($this, $name)) {
+            $method = lcfirst(str_replace('get', '', $name));
+            return $this->getLocator()->{$method}();
+        }
+    }
+
+    /**
      * @return \Xervice\Core\Factory\FactoryInterface
      * @throws \Core\Locator\Dynamic\ServiceNotParseable
      */
