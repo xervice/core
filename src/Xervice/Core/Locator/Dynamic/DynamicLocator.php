@@ -24,7 +24,7 @@ trait DynamicLocator
      */
     public function __call($name, $arguments)
     {
-        if (!method_exists($this, $name)) {
+        if (strncmp($name, 'get', 3) === 0 && !method_exists($this, $name)) {
             $method = lcfirst(str_replace('get', '', $name));
             return $this->getLocator()->{$method}();
         }

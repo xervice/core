@@ -34,7 +34,6 @@ abstract class AbstractFactory implements FactoryInterface
         $this->config = $config;
     }
 
-
     /**
      * @param string $key
      *
