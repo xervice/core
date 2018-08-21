@@ -15,9 +15,6 @@ build:
       APPLICATION_ENV: scrutinizer
 
   tests:
-    before:
-      - 'composer global require xervice/xervicecli'
-      - 'xervice dataprovider:generate'
     override:
       -
         command: 'vendor/bin/codecept run --coverage --coverage-xml'
