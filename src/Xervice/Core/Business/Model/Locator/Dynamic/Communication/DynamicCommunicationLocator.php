@@ -1,15 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Xervice\Core\Business\Model\Locator\Dynamic;
+namespace Xervice\Core\Business\Model\Locator\Dynamic\Communication;
 
 
 use Xervice\Core\Business\Exception\ServiceNotFoundException;
 use Xervice\Core\Business\Model\Facade\FacadeInterface;
+use Xervice\Core\Business\Model\Factory\FactoryInterface;
 use Xervice\Core\Business\Model\Locator\Locator;
-use Xervice\Core\Business\Model\Locator\Proxy\LocatorProxy;
+use Xervice\Core\Business\Model\Locator\Proxy\Communication\CommunicationLocatorProxy;
 
-trait DynamicLocator
+trait DynamicCommunicationLocator
 {
     /**
      * @return \Xervice\Core\Business\Model\Facade\FacadeInterface
@@ -20,11 +21,19 @@ trait DynamicLocator
     }
 
     /**
-     * @return \Xervice\Core\Business\Model\Locator\Proxy\LocatorProxy
+     * @return \Xervice\Core\Business\Model\Factory\FactoryInterface
      */
-    protected function getLocator(): LocatorProxy
+    public function getFactory(): FactoryInterface
     {
-        return Locator::getInstance()->{$this->getServiceName()}();
+        return $this->getLocator()->factory();
+    }
+
+    /**
+     * @return \Xervice\Core\Business\Model\Locator\Proxy\Communication\CommunicationLocatorProxy
+     */
+    protected function getLocator(): CommunicationLocatorProxy
+    {
+        return Locator::getInstance()->{$this->getServiceName()}()->communicationLocator();
     }
 
     /**

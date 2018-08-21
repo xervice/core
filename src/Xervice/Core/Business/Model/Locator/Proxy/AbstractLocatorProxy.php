@@ -8,8 +8,14 @@ use Xervice\Core\Business\Model\Config\AbstractConfig;
 use Xervice\Core\Business\Model\Config\ConfigInterface;
 use Xervice\Core\Business\Model\Dependency\AbstractDependencyContainer;
 use Xervice\Core\Business\Model\Dependency\DependencyContainerInterface;
+use Xervice\Core\Business\Model\Locator\Proxy\Business\BusinessLocatorProxy;
+use Xervice\Core\Business\Model\Locator\Proxy\Business\BusinessLocatorProxyInterface;
+use Xervice\Core\Business\Model\Locator\Proxy\Communication\CommunicationLocatorProxy;
+use Xervice\Core\Business\Model\Locator\Proxy\Communication\CommunicationLocatorProxyInterface;
+use Xervice\Core\Business\Model\Locator\Proxy\Persistence\PersistenceLocatorProxy;
+use Xervice\Core\Business\Model\Locator\Proxy\Persistence\PersistenceLocatorProxyInterface;
 
-class AbstractLocatorProxy implements LocatorProxyInterface
+abstract class AbstractLocatorProxy implements LocatorProxyInterface
 {
     /**
      * @var array
@@ -37,6 +43,21 @@ class AbstractLocatorProxy implements LocatorProxyInterface
     protected $container;
 
     /**
+     * @var \Xervice\Core\Business\Model\Locator\Proxy\Business\BusinessLocatorProxyInterface
+     */
+    protected $businessLocator;
+
+    /**
+     * @var \Xervice\Core\Business\Model\Locator\Proxy\Communication\CommunicationLocatorProxyInterface
+     */
+    protected $communicationLocator;
+
+    /**
+     * @var \Xervice\Core\Business\Model\Locator\Proxy\Persistence\PersistenceLocatorProxyInterface
+     */
+    protected $persistenceLocator;
+
+    /**
      * AbstractLocatorProxy constructor.
      *
      * @param array $coreNamespaces
@@ -56,6 +77,54 @@ class AbstractLocatorProxy implements LocatorProxyInterface
     public function name(): string
     {
         return $this->serviceName;
+    }
+
+    /**
+     * @return \Xervice\Core\Business\Model\Locator\Proxy\Business\BusinessLocatorProxy
+     */
+    public function businessLocator(): BusinessLocatorProxyInterface
+    {
+        if ($this->businessLocator === null) {
+            $this->businessLocator = new BusinessLocatorProxy(
+                $this->coreNamespaces,
+                $this->projectNamespaces,
+                $this->name()
+            );
+        }
+
+        return $this->businessLocator;
+    }
+
+    /**
+     * @return \Xervice\Core\Business\Model\Locator\Proxy\Communication\CommunicationLocatorProxy
+     */
+    public function communicationLocator(): CommunicationLocatorProxyInterface
+    {
+        if ($this->communicationLocator === null) {
+            $this->communicationLocator = new CommunicationLocatorProxy(
+                $this->coreNamespaces,
+                $this->projectNamespaces,
+                $this->name()
+            );
+        }
+
+        return $this->communicationLocator;
+    }
+
+    /**
+     * @return \Xervice\Core\Business\Model\Locator\Proxy\Persistence\PersistenceLocatorProxy
+     */
+    public function persistenceLocator(): PersistenceLocatorProxyInterface
+    {
+        if ($this->communicationLocator === null) {
+            $this->communicationLocator = new PersistenceLocatorProxy(
+                $this->coreNamespaces,
+                $this->projectNamespaces,
+                $this->name()
+            );
+        }
+
+        return $this->communicationLocator;
     }
 
     /**
@@ -81,7 +150,7 @@ class AbstractLocatorProxy implements LocatorProxyInterface
                 $this->config()
             );
 
-            $provider = $this->getServiceClass('DependencyProvider');
+            $provider = $this->getServiceClass('DependencyProvider', $this->getDirectory());
             if ($provider) {
                 $this->container = $this->container->register(
                     new $provider($this->config())
@@ -152,5 +221,13 @@ class AbstractLocatorProxy implements LocatorProxyInterface
             $suffix,
             $directory ? '\\' . $directory : ''
         );
+    }
+
+    /**
+     * @return null|string
+     */
+    protected function getDirectory(): ?string
+    {
+        return null;
     }
 }

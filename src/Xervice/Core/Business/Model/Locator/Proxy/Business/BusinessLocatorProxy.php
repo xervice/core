@@ -9,8 +9,10 @@ use Xervice\Core\Business\Model\Facade\FacadeInterface;
 use Xervice\Core\Business\Model\Factory\AbstractBusinessFactory;
 use Xervice\Core\Business\Model\Factory\FactoryInterface;
 use Xervice\Core\Business\Model\Locator\Proxy\AbstractLocatorProxy;
+use Xervice\Core\Business\Model\Persistence\Reader\ReaderInterface;
+use Xervice\Core\Business\Model\Persistence\Writer\WriterInterface;
 
-class BusinessLocatorProxy extends AbstractLocatorProxy
+class BusinessLocatorProxy extends AbstractLocatorProxy implements BusinessLocatorProxyInterface
 {
     private const DIRECTORY = 'Business';
 
@@ -23,6 +25,16 @@ class BusinessLocatorProxy extends AbstractLocatorProxy
      * @var \Xervice\Core\Business\Model\Facade\FacadeInterface
      */
     private $facade;
+
+    /**
+     * @var \Xervice\Core\Business\Model\Persistence\Reader\ReaderInterface
+     */
+    private $reader;
+
+    /**
+     * @var \Xervice\Core\Business\Model\Persistence\Writer\WriterInterface
+     */
+    private $writer;
 
     /**
      * @return \Xervice\Core\Business\Model\Factory\FactoryInterface
@@ -53,5 +65,21 @@ class BusinessLocatorProxy extends AbstractLocatorProxy
         }
 
         return $this->facade;
+    }
+
+    /**
+     * @return \Xervice\Core\Business\Model\Persistence\Reader\ReaderInterface
+     */
+    public function reader(): ReaderInterface
+    {
+        return $this->persistenceLocator->reader();
+    }
+
+    /**
+     * @return \Xervice\Core\Business\Model\Persistence\Writer\WriterInterface
+     */
+    public function writer(): WriterInterface
+    {
+        return $this->persistenceLocator->writer();
     }
 }
