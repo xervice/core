@@ -9,13 +9,13 @@
     }
   ],
   "require-dev": {
-    "phpunit/phpunit": "7.1.*",
     "codeception/codeception": "*",
-    "symfony/var-dumper": "*"
+    "symfony/var-dumper": "*",
+    "phpstan/phpstan": "^0.9.0"
   },
   "require": {
     "php": ">=7.1.0",
-    "xervice/config": "^2.0.0"
+    "xervice/config": "^3.0.0"
   },
   "autoload": {
     "psr-4": {
@@ -25,5 +25,8 @@
       "Test\\": "src/",
       "Xervice\\": "src/"
     }
+  },
+  "scripts": {
+    "phpstan": "vendor/bin/phpstan analyse src --level=7"
   }
 }

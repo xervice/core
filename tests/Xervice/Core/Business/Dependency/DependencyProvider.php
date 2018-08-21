@@ -1,19 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Xervice\Core;
+namespace XerviceTest\Core\Business\Dependency;
 
 
 use Xervice\Core\Business\Model\Dependency\DependencyContainerInterface;
-use Xervice\Core\Business\Model\Dependency\Provider\DependencyProviderInterface;
+use Xervice\Core\Business\Model\Dependency\Provider\AbstractDependencyProvider;
 
-class CoreDependencyProvider implements DependencyProviderInterface
+class DependencyProvider extends AbstractDependencyProvider
 {
     /**
      * @param \Xervice\Core\Business\Model\Dependency\DependencyContainerInterface $container
      */
     public function handleDependencies(DependencyContainerInterface $container): void
     {
-        // TODO: Implement handleDependencies() method.
+        $container['TEST'] = function (DependencyContainerInterface $container) {
+            return 'TESTING';
+        };
     }
 }
