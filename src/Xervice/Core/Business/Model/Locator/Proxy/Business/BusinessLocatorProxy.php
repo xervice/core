@@ -27,16 +27,6 @@ class BusinessLocatorProxy extends AbstractLocatorProxy implements BusinessLocat
     private $facade;
 
     /**
-     * @var \Xervice\Core\Business\Model\Persistence\Reader\ReaderInterface
-     */
-    private $reader;
-
-    /**
-     * @var \Xervice\Core\Business\Model\Persistence\Writer\WriterInterface
-     */
-    private $writer;
-
-    /**
      * @return \Xervice\Core\Business\Model\Factory\FactoryInterface
      */
     public function factory(): FactoryInterface
@@ -45,7 +35,9 @@ class BusinessLocatorProxy extends AbstractLocatorProxy implements BusinessLocat
             $class = $this->getServiceClass('BusinessFactory', self::DIRECTORY) ?: AbstractBusinessFactory::class;
             $this->factory = new $class(
                 $this->config(),
-                $this->container()
+                $this->container(),
+                $this->reader(),
+                $this->writer()
             );
         }
 
@@ -72,7 +64,7 @@ class BusinessLocatorProxy extends AbstractLocatorProxy implements BusinessLocat
      */
     public function reader(): ReaderInterface
     {
-        return $this->persistenceLocator->reader();
+        return $this->persistenceLocator()->reader();
     }
 
     /**
@@ -80,6 +72,6 @@ class BusinessLocatorProxy extends AbstractLocatorProxy implements BusinessLocat
      */
     public function writer(): WriterInterface
     {
-        return $this->persistenceLocator->writer();
+        return $this->persistenceLocator()->writer();
     }
 }

@@ -6,7 +6,7 @@ namespace Xervice\Core\Business\Model\Persistence\Writer;
 
 use Xervice\Core\Business\Model\Config\ConfigInterface;
 
-class AbstractWriter
+class AbstractWriter implements WriterInterface
 {
     /**
      * @var \Xervice\Core\Business\Model\Config\ConfigInterface

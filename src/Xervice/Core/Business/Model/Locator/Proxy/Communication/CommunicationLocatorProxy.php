@@ -24,10 +24,12 @@ class CommunicationLocatorProxy extends AbstractLocatorProxy implements Communic
     public function factory(): FactoryInterface
     {
         if ($this->factory === null) {
-            $class = $this->getServiceClass('CommunicationFactory', self::DIRECTORY) ?: AbstractCommunicationFactory::class;
+            $class = $this->getServiceClass('CommunicationFactory', self::DIRECTORY)
+                ?: AbstractCommunicationFactory::class;
             $this->factory = new $class(
                 $this->config(),
-                $this->container()
+                $this->container(),
+                $this->facade()
             );
         }
 
