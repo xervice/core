@@ -3,6 +3,7 @@ namespace XerviceTest\Core\Business\Dependency;
 
 use Xervice\Core\Business\Model\Config\AbstractConfig;
 use Xervice\Core\Business\Model\Dependency\AbstractDependencyContainer;
+use Xervice\Core\Business\Model\Locator\Locator;
 
 class IntegrationTest extends \Codeception\Test\Unit
 {
