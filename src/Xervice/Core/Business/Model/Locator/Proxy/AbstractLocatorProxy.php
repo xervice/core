@@ -83,7 +83,7 @@ class AbstractLocatorProxy implements LocatorProxyInterface
 
             $provider = $this->getServiceClass('DependencyProvider');
             if ($provider) {
-                $this->container->register(
+                $this->container = $this->container->register(
                     new $provider($this->config())
                 );
             }

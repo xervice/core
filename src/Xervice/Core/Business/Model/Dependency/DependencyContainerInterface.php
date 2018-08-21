@@ -25,8 +25,10 @@ interface DependencyContainerInterface extends \ArrayAccess
 
     /**
      * @param \Xervice\Core\Business\Model\Dependency\Provider\DependencyProviderInterface $dependencyProvider
+     *
+     * @return \Xervice\Core\Business\Model\Dependency\DependencyContainerInterface
      */
-    public function register(DependencyProviderInterface $dependencyProvider): void;
+    public function register(DependencyProviderInterface $dependencyProvider): DependencyContainerInterface;
 
     /**
      * @param string $name

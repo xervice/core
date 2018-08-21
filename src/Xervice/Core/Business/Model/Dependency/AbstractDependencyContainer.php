@@ -100,10 +100,13 @@ class AbstractDependencyContainer implements DependencyContainerInterface
 
     /**
      * @param \Xervice\Core\Business\Model\Dependency\Provider\DependencyProviderInterface $dependencyProvider
+     *
+     * @return \Xervice\Core\Business\Model\Dependency\DependencyContainerInterface
      */
-    public function register(DependencyProviderInterface $dependencyProvider): void
+    public function register(DependencyProviderInterface $dependencyProvider): DependencyContainerInterface
     {
-        $dependencyProvider->handleDependencies($this);
+        $this->values = [];
+        return $dependencyProvider->handleDependencies($this);
     }
 
     /**
@@ -114,7 +117,9 @@ class AbstractDependencyContainer implements DependencyContainerInterface
     {
         $value = $this->offsetGet($name);
         $this->offsetUnset($name);
-        $this->offsetSet($name, $callable($value));
+        $this->offsetSet($name, function () use ($callable, $value) {
+            return $callable($value);
+        });
     }
 
     /**

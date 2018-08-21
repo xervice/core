@@ -19,7 +19,9 @@ class IntegrationTest extends \Codeception\Test\Unit
             new AbstractConfig()
         );
 
-        $container->set('TEST', 'BEFORE');
+        $container->set('TEST', function() {
+            return 'BEFORE';
+        });
 
         $this->assertEquals(
             'BEFORE',
@@ -35,10 +37,15 @@ class IntegrationTest extends \Codeception\Test\Unit
             $container->get('TEST')
         );
 
-        $container['TEST'] = 'AFTER';
+        $container->extend(
+            'TEST',
+            function (string $oldValue) {
+                return $oldValue . 'AFTER';
+            }
+        );
 
         $this->assertEquals(
-            'AFTER',
+            'TESTINGAFTER',
             $container['TEST']
         );
     }

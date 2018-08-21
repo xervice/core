@@ -10,6 +10,8 @@ interface DependencyProviderInterface
 {
     /**
      * @param \Xervice\Core\Business\Model\Dependency\DependencyContainerInterface $container
+     *
+     * @return \Xervice\Core\Business\Model\Dependency\DependencyContainerInterface
      */
-    public function handleDependencies(DependencyContainerInterface $container): void;
+    public function handleDependencies(DependencyContainerInterface $container): DependencyContainerInterface;
 }
