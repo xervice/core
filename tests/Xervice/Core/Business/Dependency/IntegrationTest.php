@@ -36,8 +36,7 @@ class IntegrationTest extends \Codeception\Test\Unit
 
         $container->register(
             new DependencyProvider(
-                new AbstractConfig(),
-                Locator::getInstance()->core()
+                new AbstractConfig()
             )
         );
 

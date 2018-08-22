@@ -9,7 +9,7 @@ use Xervice\Core\Business\Model\Config\ConfigInterface;
 abstract class AbstractDependencyProvider implements DependencyProviderInterface
 {
     /**
-     * @var \Xervice\Core\Business\Model\Config\ConfigInterface
+     * @var ConfigInterface
      */
     protected $config;
 
@@ -18,7 +18,7 @@ abstract class AbstractDependencyProvider implements DependencyProviderInterface
      *
      * @param \Xervice\Core\Business\Model\Config\ConfigInterface $config
      */
-    public function __construct(\Xervice\Core\Business\Model\Config\ConfigInterface $config)
+    public function __construct(ConfigInterface $config)
     {
         $this->config = $config;
     }
