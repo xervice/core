@@ -147,7 +147,8 @@ abstract class AbstractLocatorProxy implements LocatorProxyInterface
     {
         if ($this->container === null) {
             $this->container = new AbstractDependencyContainer(
-                $this->config()
+                $this->config(),
+                $this
             );
 
             $provider = $this->getServiceClass('DependencyProvider', $this->getDirectory());

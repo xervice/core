@@ -1,4 +1,5 @@
 <?php
+
 namespace XerviceTest\Core\Business\Dependency;
 
 use Xervice\Core\Business\Model\Config\AbstractConfig;
@@ -17,12 +18,16 @@ class IntegrationTest extends \Codeception\Test\Unit
     public function testDependencyProvider()
     {
         $container = new AbstractDependencyContainer(
-            new AbstractConfig()
+            new AbstractConfig(),
+            Locator::getInstance()->core()
         );
 
-        $container->set('TEST', function() {
-            return 'BEFORE';
-        });
+        $container->set(
+            'TEST',
+            function () {
+                return 'BEFORE';
+            }
+        );
 
         $this->assertEquals(
             'BEFORE',
@@ -30,7 +35,10 @@ class IntegrationTest extends \Codeception\Test\Unit
         );
 
         $container->register(
-            new DependencyProvider(new AbstractConfig())
+            new DependencyProvider(
+                new AbstractConfig(),
+                Locator::getInstance()->core()
+            )
         );
 
         $this->assertEquals(

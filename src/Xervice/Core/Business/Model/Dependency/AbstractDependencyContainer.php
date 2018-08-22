@@ -6,6 +6,8 @@ namespace Xervice\Core\Business\Model\Dependency;
 
 use Xervice\Core\Business\Model\Config\ConfigInterface;
 use Xervice\Core\Business\Model\Dependency\Provider\DependencyProviderInterface;
+use Xervice\Core\Business\Model\Locator\Proxy\AbstractLocatorProxy;
+use Xervice\Core\Business\Model\Locator\Proxy\LocatorProxyInterface;
 
 class AbstractDependencyContainer implements DependencyContainerInterface
 {
@@ -25,13 +27,22 @@ class AbstractDependencyContainer implements DependencyContainerInterface
     private $config;
 
     /**
+     * @var \Xervice\Core\Business\Model\Locator\Proxy\AbstractLocatorProxy
+     */
+    private $locator;
+
+    /**
      * AbstractDependencyContainer constructor.
      *
      * @param \Xervice\Core\Business\Model\Config\ConfigInterface $config
+     * @param \Xervice\Core\Business\Model\Locator\Proxy\AbstractLocatorProxy $locator
      */
-    public function __construct(ConfigInterface $config)
-    {
+    public function __construct(
+        ConfigInterface $config,
+        AbstractLocatorProxy $locator
+    ) {
         $this->config = $config;
+        $this->locator = $locator;
     }
 
     /**
@@ -128,5 +139,13 @@ class AbstractDependencyContainer implements DependencyContainerInterface
     protected function getConfig(): ConfigInterface
     {
         return $this->config;
+    }
+
+    /**
+     * @return \Xervice\Core\Business\Model\Locator\Proxy\AbstractLocatorProxy
+     */
+    protected function getLocator(): AbstractLocatorProxy
+    {
+        return $this->locator;
     }
 }
