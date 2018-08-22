@@ -6,7 +6,6 @@ namespace Xervice\Core\Business\Model\Locator\Dynamic\Business;
 
 use Xervice\Core\Business\Exception\ServiceNotFoundException;
 use Xervice\Core\Business\Model\Facade\FacadeInterface;
-use Xervice\Core\Business\Model\Factory\AbstractBusinessFactory;
 use Xervice\Core\Business\Model\Factory\FactoryInterface;
 use Xervice\Core\Business\Model\Locator\Locator;
 use Xervice\Core\Business\Model\Locator\Proxy\Business\BusinessLocatorProxy;
