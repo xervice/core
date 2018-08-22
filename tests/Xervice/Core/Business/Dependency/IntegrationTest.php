@@ -19,7 +19,7 @@ class IntegrationTest extends \Codeception\Test\Unit
     {
         $container = new AbstractDependencyContainer(
             new AbstractConfig(),
-            Locator::getInstance()->core()
+            Locator::getInstance()
         );
 
         $container->set(

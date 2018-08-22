@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace Xervice\Core\Business\Model\Dependency;
 
 
+use Xervice\Core\Business\Model\Config\ConfigInterface;
 use Xervice\Core\Business\Model\Dependency\Provider\DependencyProviderInterface;
+use Xervice\Core\Business\Model\Locator\Locator;
 
 interface DependencyContainerInterface extends \ArrayAccess
 {
@@ -35,4 +37,14 @@ interface DependencyContainerInterface extends \ArrayAccess
      * @param callable $callable
      */
     public function extend(string $name, callable $callable): void;
+
+    /**
+     * @return \Xervice\Core\Business\Model\Locator\Locator
+     */
+    public function getLocator(): Locator;
+
+    /**
+     * @return \Xervice\Core\Business\Model\Config\ConfigInterface
+     */
+    public function getConfig(): ConfigInterface;
 }

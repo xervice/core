@@ -6,6 +6,7 @@ namespace Xervice\Core\Business\Model\Dependency;
 
 use Xervice\Core\Business\Model\Config\ConfigInterface;
 use Xervice\Core\Business\Model\Dependency\Provider\DependencyProviderInterface;
+use Xervice\Core\Business\Model\Locator\Locator;
 use Xervice\Core\Business\Model\Locator\Proxy\AbstractLocatorProxy;
 use Xervice\Core\Business\Model\Locator\Proxy\LocatorProxyInterface;
 
@@ -27,7 +28,7 @@ class AbstractDependencyContainer implements DependencyContainerInterface
     private $config;
 
     /**
-     * @var \Xervice\Core\Business\Model\Locator\Proxy\AbstractLocatorProxy
+     * @var \Xervice\Core\Business\Model\Locator\Locator
      */
     private $locator;
 
@@ -35,11 +36,11 @@ class AbstractDependencyContainer implements DependencyContainerInterface
      * AbstractDependencyContainer constructor.
      *
      * @param \Xervice\Core\Business\Model\Config\ConfigInterface $config
-     * @param \Xervice\Core\Business\Model\Locator\Proxy\AbstractLocatorProxy $locator
+     * @param \Xervice\Core\Business\Model\Locator\Locator $locator
      */
     public function __construct(
         ConfigInterface $config,
-        AbstractLocatorProxy $locator
+        Locator $locator
     ) {
         $this->config = $config;
         $this->locator = $locator;
@@ -134,18 +135,18 @@ class AbstractDependencyContainer implements DependencyContainerInterface
     }
 
     /**
-     * @return \Xervice\Core\Business\Model\Config\ConfigInterface
+     * @return \Xervice\Core\Business\Model\Locator\Locator
      */
-    protected function getConfig(): ConfigInterface
+    public function getLocator(): Locator
     {
-        return $this->config;
+        return $this->locator;
     }
 
     /**
-     * @return \Xervice\Core\Business\Model\Locator\Proxy\AbstractLocatorProxy
+     * @return \Xervice\Core\Business\Model\Config\ConfigInterface
      */
-    protected function getLocator(): AbstractLocatorProxy
+    public function getConfig(): ConfigInterface
     {
-        return $this->locator;
+        return $this->config;
     }
 }

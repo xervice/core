@@ -8,6 +8,7 @@ use Xervice\Core\Business\Model\Config\AbstractConfig;
 use Xervice\Core\Business\Model\Config\ConfigInterface;
 use Xervice\Core\Business\Model\Dependency\AbstractDependencyContainer;
 use Xervice\Core\Business\Model\Dependency\DependencyContainerInterface;
+use Xervice\Core\Business\Model\Locator\Locator;
 use Xervice\Core\Business\Model\Locator\Proxy\Business\BusinessLocatorProxy;
 use Xervice\Core\Business\Model\Locator\Proxy\Business\BusinessLocatorProxyInterface;
 use Xervice\Core\Business\Model\Locator\Proxy\Communication\CommunicationLocatorProxy;
@@ -148,7 +149,7 @@ abstract class AbstractLocatorProxy implements LocatorProxyInterface
         if ($this->container === null) {
             $this->container = new AbstractDependencyContainer(
                 $this->config(),
-                $this
+                Locator::getInstance()
             );
 
             $provider = $this->getServiceClass('DependencyProvider', $this->getDirectory());

@@ -17,6 +17,8 @@ class DependencyProvider extends AbstractDependencyProvider
     public function handleDependencies(DependencyContainerInterface $container): DependencyContainerInterface
     {
         $container['TEST'] = function (DependencyContainerInterface $container) {
+            $facade = $container->getLocator()->core()->facade();
+            $config = $container->getConfig();
             return 'TESTING';
         };
 
