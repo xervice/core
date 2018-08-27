@@ -70,6 +70,7 @@ abstract class AbstractLocatorProxy implements LocatorProxyInterface
         $this->coreNamespaces = $coreNamespaces;
         $this->projectNamespaces = $projectNamespaces;
         $this->serviceName = $serviceName;
+        $this->container = [];
     }
 
     /**
@@ -146,21 +147,23 @@ abstract class AbstractLocatorProxy implements LocatorProxyInterface
      */
     protected function container(): DependencyContainerInterface
     {
-        if ($this->container === null) {
-            $this->container = new AbstractDependencyContainer(
+        $directory = $this->getDirectory();
+
+        if (!isset($this->container[$directory])) {
+            $this->container[$directory] = new AbstractDependencyContainer(
                 $this->config(),
                 Locator::getInstance()
             );
 
-            $provider = $this->getServiceClass('DependencyProvider', $this->getDirectory());
+            $provider = $this->getServiceClass('DependencyProvider', $directory);
             if ($provider) {
-                $this->container = $this->container->register(
+                $this->container[$directory] = $this->container[$directory]->register(
                     new $provider($this->config())
                 );
             }
         }
 
-        return $this->container;
+        return $this->container[$directory];
     }
 
     /**
