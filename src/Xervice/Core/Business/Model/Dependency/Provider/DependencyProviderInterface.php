@@ -5,8 +5,9 @@ namespace Xervice\Core\Business\Model\Dependency\Provider;
 
 
 use Xervice\Core\Business\Model\Dependency\DependencyContainerInterface;
+use Xervice\Core\Business\Model\Xervice\XerviceInterface;
 
-interface DependencyProviderInterface
+interface DependencyProviderInterface extends XerviceInterface
 {
     /**
      * @param \Xervice\Core\Business\Model\Dependency\DependencyContainerInterface $container
