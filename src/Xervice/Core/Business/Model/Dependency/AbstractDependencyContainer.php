@@ -135,7 +135,7 @@ class AbstractDependencyContainer implements DependencyContainerInterface
     }
 
     /**
-     * @return \Xervice\Core\Business\Model\Locator\Locator
+     * @return \Generated\Ide\LocatorAutoComplete|\Xervice\Core\Business\Model\Locator\Locator
      */
     public function getLocator(): Locator
     {
