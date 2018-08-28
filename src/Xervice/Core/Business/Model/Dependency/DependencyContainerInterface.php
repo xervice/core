@@ -39,7 +39,7 @@ interface DependencyContainerInterface extends \ArrayAccess
     public function extend(string $name, callable $callable): void;
 
     /**
-     * @return \Xervice\Core\Business\Model\Locator\Locator
+     * @return \Generated\Ide\LocatorAutoComplete|Xervice\Core\Business\Model\Locator\Locator
      */
     public function getLocator(): Locator;
 
