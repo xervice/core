@@ -52,7 +52,8 @@ class BusinessLocatorProxy extends AbstractLocatorProxy implements BusinessLocat
         if ($this->facade === null) {
             $class = $this->getServiceClass('Facade', self::DIRECTORY) ?: AbstractFacade::class;
             $this->facade = new $class(
-                $this->factory()
+                $this->factory(),
+                $this->config()
             );
         }
 

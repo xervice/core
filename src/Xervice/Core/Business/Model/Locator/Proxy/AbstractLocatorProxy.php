@@ -15,6 +15,7 @@ use Xervice\Core\Business\Model\Locator\Proxy\Communication\CommunicationLocator
 use Xervice\Core\Business\Model\Locator\Proxy\Communication\CommunicationLocatorProxyInterface;
 use Xervice\Core\Business\Model\Locator\Proxy\Persistence\PersistenceLocatorProxy;
 use Xervice\Core\Business\Model\Locator\Proxy\Persistence\PersistenceLocatorProxyInterface;
+use Xervice\Core\Business\Model\Xervice\XerviceInterface;
 
 abstract class AbstractLocatorProxy implements LocatorProxyInterface
 {
@@ -201,7 +202,7 @@ abstract class AbstractLocatorProxy implements LocatorProxyInterface
 
         foreach ($namespaces as $namespace) {
             $class = $this->getNamespace($namespace, $suffix, $directory);
-            if (class_exists($class)) {
+            if (class_exists($class) && is_subclass_of($class, XerviceInterface::class)) {
                 $serviceClass = $class;
                 break;
             }
